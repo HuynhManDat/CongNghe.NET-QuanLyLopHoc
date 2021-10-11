@@ -1,0 +1,78 @@
+﻿@model TaiKhoan
+@{ 
+    var list = new List<SelectListItem>();
+    list.Add(new SelectListItem { Text = "Admin", Value = "" + (int)UserType.Admin });
+    list.Add(new SelectListItem { Text = "Giáo viên", Value = "" + (int)UserType.GiaoVien, Disabled = true });
+    list.Add(new SelectListItem { Text = "Học viên", Value = "" + (int)UserType.HocVien, Disabled = true });
+}
+@Html.HiddenFor(x => x.MaTaKhoan)
+
+<div class="box-body">
+    @if (Model.MaTaKhoan > 0)
+    {
+        <div class="form-group">
+            <label class="col-md-3 control-label">Tài khoản</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(x => x.TenDangNhap, new Dictionary<string, object>
+                {
+                    {"class", "form-control"},
+                    {"disabled", "disabled" }
+                })
+                @Html.ValidationMessageFor(x => x.TenDangNhap)
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            <label class="col-md-3 control-label">Tài khoản</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(x => x.TenDangNhap, new Dictionary<string, object>
+                {
+                    {"class", "form-control"},
+                    {"required", "required" }
+                })
+                @Html.ValidationMessageFor(x => x.TenDangNhap)
+            </div>
+        </div>
+    }
+    <div class="form-group">
+        <label class="col-md-3 control-label">Mật khẩu</label>
+        <div class="col-md-4">
+            @Html.PasswordFor(x => x.MatKhau, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"required", "required" }
+            })
+            @Html.ValidationMessageFor(x => x.MatKhau)
+        </div>
+    </div>
+    @if (Model.MaTaKhoan > 0)
+    {
+        <div class="form-group">
+            <label class="col-md-3 control-label">Loại tài khoản</label>
+            <div class="col-md-4">
+                @Html.DropDownListFor(x => x.LoaiTaiKhoan, list, new Dictionary<string, object>
+                {
+                    {"class", "form-control"},
+                    {"disabled", "disabled" }
+                })
+                @Html.ValidationMessageFor(x => x.LoaiTaiKhoan)
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            <label class="col-md-3 control-label">Loại tài khoản</label>
+            <div class="col-md-4">
+                @Html.DropDownListFor(x => x.LoaiTaiKhoan, list, new Dictionary<string, object>
+                {
+                    {"class", "form-control"},
+                    {"required", "required" }
+                })
+                @Html.ValidationMessageFor(x => x.LoaiTaiKhoan)
+            </div>
+        </div>
+    }
+</div>

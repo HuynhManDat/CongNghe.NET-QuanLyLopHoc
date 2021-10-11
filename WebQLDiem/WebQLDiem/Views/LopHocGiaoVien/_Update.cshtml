@@ -1,0 +1,99 @@
+﻿@model LopHoc
+@{ 
+    var list = new List<SelectListItem>();
+    list.Add(new SelectListItem { Text = "Nháp", Value = "" + (int)TrangThaiLop.Nhap });
+    list.Add(new SelectListItem { Text = "Kích hoạt", Value = "" + (int)TrangThaiLop.KichHoat });
+    list.Add(new SelectListItem { Text = "Đóng", Value = "" + (int)TrangThaiLop.Dong });
+}
+
+@Html.HiddenFor(x => x.MaLopHoc)
+@Html.HiddenFor(x => x.NguoiTao)
+
+<div class="box-body">
+    @if (Model.MaLopHoc > 0)
+    {
+        <div class="form-group">
+            <label class="col-md-3 control-label">Mã lớp học</label>
+            <div class="col-md-5">
+                <input type="text" value="@StringHelpper.MaLopHocConvert(Model.MaLopHoc)" class="form-control" readonly/>
+            </div>
+        </div>
+    }
+    <div class="form-group">
+        <label class="col-md-3 control-label">Ngày tạo</label>
+        <div class="col-md-5">
+            @Html.TextBoxFor(x => x.NgayTao, new Dictionary<string, object>
+                {
+                    {"class", "form-control"},
+                    { "readonly", "readonly" }
+                })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Tên lớp học </label>
+        <div class="col-md-5">
+            @Html.TextBoxFor(x => x.TenLopHoc, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"required", "required"},
+                {"maxlength","100" }
+            })
+            @Html.ValidationMessageFor(x => x.TenLopHoc)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Mô tả</label>
+        <div class="col-md-5">
+            @Html.TextAreaFor(x => x.MoTa, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"maxlength","1000" }
+            })
+            @Html.ValidationMessageFor(x => x.MoTa)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Địa chỉ</label>
+        <div class="col-md-5">
+            @Html.TextBoxFor(x => x.DiaChi, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"maxlength","500" }
+            })
+            @Html.ValidationMessageFor(x => x.DiaChi)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Phòng</label>
+        <div class="col-md-5">
+            @Html.TextBoxFor(x => x.Phong, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"maxlength","100" }
+            })
+            @Html.ValidationMessageFor(x => x.Phong)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Chủ đề</label>
+        <div class="col-md-5">
+            @Html.TextBoxFor(x => x.ChuDe, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"maxlength","100" }
+            })
+            @Html.ValidationMessageFor(x => x.ChuDe)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Trạng thái</label>
+        <div class="col-md-4">
+            @Html.DropDownListFor(x => x.TrangThai, list, new Dictionary<string, object>
+                {
+                    {"class", "form-control"},
+                    {"required", "required" }
+                })
+            @Html.ValidationMessageFor(x => x.TrangThai)
+        </div>
+    </div>
+</div>

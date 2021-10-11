@@ -1,0 +1,202 @@
+﻿@model List<LopHoc>
+@{
+    ViewBag.Title = "Quản lý trạng thái";
+    ViewBag.Controller = "Trạng thái";
+    ViewBag.QuanLy = "active";
+    ViewBag.TrangThai = "active";
+    ViewBag.Id = "view-null";
+
+    var malop = 0;
+    if (ViewBag.MaLop != null)
+    {
+        malop = (int)ViewBag.MaLop;
+    }
+    var MaTaiKhoan = 0;
+    HttpCookie id = Request.Cookies.Get("Id");
+    if (id != null)
+    {
+        MaTaiKhoan = int.Parse(id.Value);
+    }
+
+    var db = new WebQLDiemEntities();
+    var listLop = new List<SelectListItem>();
+    listLop.Add(new SelectListItem() { Value = "0", Text = "==Chọn lớp==" });
+    foreach (var item in db.HocViens.FirstOrDefault(x => x.MaTaiKhoan == MaTaiKhoan).LopHocs.Where(x => x.TrangThai == (int)TrangThaiLop.KichHoat).ToList())
+    {
+        listLop.Add(new SelectListItem { Value = item.MaLopHoc.ToString(), Text = item.TenLopHoc, Selected = malop == item.MaLopHoc });
+    }
+}
+<style>
+    .w150 {
+        width: 150px !important;
+    }
+
+    .img-circle {
+        width: 40px !important;
+        height: 40px !important;
+        text-align: center;
+        padding: 9px;
+        background: #f59029;
+        margin-right: 20px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form action="@Url.Action("Index")" method="get" class="form-horizontal">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="col-md-3">
+                                <label>Lớp học</label>
+                                @Html.DropDownList("MaLopHoc", listLop, new Dictionary<string, object>
+                                {
+                                    {"class", "form-control select2"}
+                                })
+                            </div>
+                            <div class="col-md-2">
+                                <br />
+                                <button class="btn btn-info" type="submit" style="margin-top: 5px;">Lọc</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <br />
+                <br />
+
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Mới</a></li>
+                        <li><a href="#tab_2" data-toggle="tab" aria-expanded="true">Nợ</a></li>
+                        <li><a href="#tab_3" data-toggle="tab" aria-expanded="true">Xong</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box-body">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.BaiTaps.Count(y => y.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && y.BaiTap_HocVien.Count(z=>z.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && z.HocVien.MaTaiKhoan == MaTaiKhoan) > 0 && y.NgayKetThuc >= DateTime.Now) > 0)
+                                            {
+                                                foreach (var bt in item.BaiTaps.Where(y => y.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && y.BaiTap_HocVien.Count(z=>z.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && z.HocVien.MaTaiKhoan == MaTaiKhoan) > 0 && y.NgayKetThuc >= DateTime.Now).ToList())
+                                                {
+                                                    <div class="box-footer box-comments">
+                                                        <div class="box-comment">
+                                                            <!-- User image -->
+                                                            <div class="img-circle img-sm">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                            </div>
+                                                            <div class="comment-text">
+                                                                <span class="username">
+                                                                    @bt.TenBaiTap
+                                                                    <span class="text-muted pull-right">
+                                                                        @bt.NgayBatDau
+                                                                    </span>
+                                                                </span><!-- /.username -->
+                                                                @bt.LopHoc.TenLopHoc
+                                                            </div><!-- /.comment-text -->
+                                                        </div><!-- /.box-comment -->
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box-body">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.BaiTaps.Count(y => y.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && y.BaiTap_HocVien.Count(z=>z.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && z.HocVien.MaTaiKhoan == MaTaiKhoan) > 0 && y.NgayKetThuc < DateTime.Now) > 0)
+                                            {
+                                                foreach (var bt in item.BaiTaps.Where(y => y.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && y.BaiTap_HocVien.Count(z=>z.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && z.HocVien.MaTaiKhoan == MaTaiKhoan) > 0 && y.NgayKetThuc < DateTime.Now).ToList())
+                                                {
+                                                    <div class="box-footer box-comments">
+                                                        <div class="box-comment">
+                                                            <!-- User image -->
+                                                            <div class="img-circle img-sm">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                            </div>
+                                                            <div class="comment-text">
+                                                                <span class="username">
+                                                                    @bt.TenBaiTap
+                                                                    <span class="text-muted pull-right">
+                                                                        @bt.NgayKetThuc
+                                                                    </span>
+                                                                </span><!-- /.username -->
+                                                                @bt.LopHoc.TenLopHoc
+                                                            </div><!-- /.comment-text -->
+                                                        </div><!-- /.box-comment -->
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box-body">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.BaiTaps.Count(y => y.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && y.BaiTap_HocVien.Count(z=>z.TrangThai > (int)TrangThaiBaiTap.GiaoBaiTap && z.HocVien.MaTaiKhoan == MaTaiKhoan) > 0) > 0)
+                                            {
+                                                foreach (var bt in item.BaiTaps.Where(y => y.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && y.BaiTap_HocVien.Count(z=>z.TrangThai > (int)TrangThaiBaiTap.GiaoBaiTap && z.HocVien.MaTaiKhoan == MaTaiKhoan) > 0).ToList())
+                                                {
+                                                    <div class="box-footer box-comments">
+                                                        <div class="box-comment">
+                                                            <!-- User image -->
+                                                            <div class="img-circle img-sm">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                            </div>
+                                                            <div class="comment-text">
+                                                                <span class="username">
+                                                                    @bt.TenBaiTap
+                                                                    <span class="text-muted pull-right">
+                                                                        @if (bt.BaiTap_HocVien.FirstOrDefault(x => x.HocVien.MaTaiKhoan == MaTaiKhoan).TrangThai == (int)TrangThaiBaiTap.NopBaiTap)
+                                                                        {
+                                                                            <span>Đã nộp</span>
+                                                                        }
+                                                                        @if (bt.BaiTap_HocVien.FirstOrDefault(x => x.HocVien.MaTaiKhoan == MaTaiKhoan).TrangThai == (int)TrangThaiBaiTap.ChamDiem)
+                                                                        {
+                                                                            <span>@bt.BaiTap_HocVien.FirstOrDefault(x => x.HocVien.MaTaiKhoan == MaTaiKhoan).DiemHocTap/@bt.ThangDiem</span>
+                                                                        }
+                                                                    </span>
+                                                                </span><!-- /.username -->
+                                                                @bt.LopHoc.TenLopHoc
+                                                            </div><!-- /.comment-text -->
+                                                        </div><!-- /.box-comment -->
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.tab-content -->
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".select2").select2();
+        });
+    </script>
+}

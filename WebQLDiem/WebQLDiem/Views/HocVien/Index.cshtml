@@ -1,0 +1,48 @@
+﻿@model List<HocVien>
+@{
+    ViewBag.Title = "Danh sách học viên";
+    ViewBag.Controller = "Học viên";
+    ViewBag.General = "active";
+    ViewBag.HocVien = "active";
+    ViewBag.Id = "view-null";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+                <a href="@Url.Action("Add")" class="btn btn-success pull-right">Thêm</a>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th class="w100">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.TenHocVien</td>
+                                <td>@item.Email</td>
+                                <td>@item.SoDienThoai</td>
+                                <td>@item.DiaChi</td>
+                                <td>
+                                    <a href="@Url.Action("Edit")/@item.MaHocVien" class="btn btn-info btn-sm">Sửa</a>
+                                    <a href="@Url.Action("Delete")/@item.MaHocVien" onclick="return confirm('Bạn chắc chắn muốn xóa mục đã chọn?')" class="btn btn-danger btn-sm">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+

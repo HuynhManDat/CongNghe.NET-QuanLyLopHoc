@@ -1,0 +1,153 @@
+﻿@model BaiTap_HocVien
+@{
+    ViewBag.Title = "Chấm điểm";
+    ViewBag.Controller = "Chấm điểm";
+    ViewBag.QuanLy = "active";
+    ViewBag.Diem = "active";
+    ViewBag.Id = "view-null";
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <!-- form start -->
+            <form action="@Url.Action("Edit")" method="post" class="form-horizontal">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.MaBaiTap)
+                @Html.HiddenFor(x => x.MaHocVien)
+
+                <div class="box-body">
+                    @if (Model.BaiTap.MaLopHoc > 0)
+                    {
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Mã lớp học</label>
+                            <div class="col-md-5">
+                                <input type="text" value="@StringHelpper.MaLopHocConvert(Model.BaiTap.MaLopHoc)" class="form-control" readonly />
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Ngày nộp bài</label>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(x => x.NgayNop, new Dictionary<string, object>
+                                {
+                                    {"class", "form-control"},
+                                    { "readonly", "readonly" }
+                                })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Chủ đề</label>
+                        <div class="col-md-5">
+                            <input type="text" value="@Html.Raw(Model.BaiTap.ChuDe != null? Model.BaiTap.ChuDe.TenChuDe : "")" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Bài tập</label>
+                        <div class="col-md-5">
+                            <input type="text" value="@Model.BaiTap.TenBaiTap" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Bài tập học viên giao</label>
+                        <div class="col-md-5">
+                            <table class="table" id="listImg"></table>
+                            <input type="hidden" id="MoreImages" name="MoreImages" value="@Model.TepDinhKem" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Thang điểm học tập</label>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(x => x.BaiTap.ThangDiem, new Dictionary<string, object>
+                            {
+                                {"class", "form-control"},
+                                { "readonly", "readonly" }
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Thang điểm chuyên cần</label>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(x => x.BaiTap.ThangDiemChuyenCan, new Dictionary<string, object>
+                            {
+                                {"class", "form-control"},
+                                { "readonly", "readonly" }
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Điểm học tập</label>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(x => x.DiemHocTap, new Dictionary<string, object>
+                            {
+                                {"type", "number"},
+                                {"class", "form-control"},
+                                { "max", Model.BaiTap.ThangDiem },
+                                { "min", 0},
+                                {"required", "required" }
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Điểm chuyên cần</label>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(x => x.DiemChuyenCan, new Dictionary<string, object>
+                            {
+                                {"type", "number"},
+                                {"class", "form-control"},
+                                { "max", Model.BaiTap.ThangDiemChuyenCan },
+                                { "min", 0},
+                                {"required", "required" }
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Nhận xét</label>
+                        <div class="col-md-5">
+                            @Html.TextAreaFor(x => x.NhanXetGiangVien, new Dictionary<string, object>
+                            {
+                                {"class", "form-control"}
+                            })
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Chấm điểm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/ClientScripts/mvcfoolproof.unobtrusive.min.js"></script>
+
+<script>
+    try {
+        var stringImg = $('#MoreImages').val();
+        arrayImg = stringImg.split(',');
+        genderImg();
+    }
+    catch (err) { }
+
+    function genderImg() {
+        var i = 0;
+        var str = '';
+        for (i; i < arrayImg.length; i++) {
+            if (arrayImg[i] != undefined && arrayImg[i] != null && arrayImg[i] != '') {
+                var arr = arrayImg[i].split('/');
+                str += '<tr style="border-bottom: 1px beige solid;"><td><a href="' + arrayImg[i] + '" target="_blank">' + arr[arr.length - 1] + '</a></td></tr>'
+            }
+        }
+
+        $('#listImg').html(str);
+        $("#MoreImages").val(arrayImg.toString());
+    }
+</script>

@@ -1,0 +1,182 @@
+﻿@model ThongBao
+@{
+    ViewBag.Title = "Thông báo";
+    Layout = null;
+}
+
+<style>
+    .fix-content .form-control {
+        background: #fff;
+        border: none;
+    }
+
+        .fix-content .form-control.fixxx {
+            border: 1px solid #808080;
+        }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="row fix-content">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <!-- form start -->
+            <div class="form-horizontal">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.MaLopHoc)
+
+                <div class="box-body">
+                    <div class="fix-view">
+                        <!-- left column -->
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label class="col-md-12">Nội dung thông báo</label>
+                                <div class="col-md-12">
+                                    <div class="form-control">
+                                        @Html.Raw(Model.NoiDung)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Tệp đính kèm</label>
+                                <div class="col-md-12">
+                                    <table class="table" id="listImg"></table>
+                                    <input type="hidden" id="MoreImages" name="MoreImages" value="@string.Join(",", Model.ThongBaoTepDinhKems.Select(x=>x.DuongDan).ToList())"/>
+                                </div>
+                            </div>
+                            <hr />
+                            <h4>Trao đổi</h4>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="direct-chat-messages">
+                                        @if (Model.ThongBao_NhanXet != null)
+                                        {
+                                            foreach (var item in Model.ThongBao_NhanXet.ToList())
+                                            {
+                                                if (item.TaiKhoan.LoaiTaiKhoan == (int)UserType.HocVien)
+                                                {
+                                                    <div class="direct-chat-msg">
+                                                        <div class="direct-chat-info clearfix">
+                                                            <span class="direct-chat-name pull-left">@item.TaiKhoan.TenDangNhap</span>
+                                                            <span class="direct-chat-timestamp pull-right">@item.NgayTao</span>
+                                                        </div>
+                                                        @if (!string.IsNullOrEmpty(item.TaiKhoan.HinhDaiDien))
+                                                        {
+                                                            <img src="@item.TaiKhoan.HinhDaiDien" class="direct-chat-img" style="width:35px; height:35px;" alt="User Image">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="/Content/dist/img/avatar04.png" style="width:35px; height:35px;" class="direct-chat-img" alt="User Image">
+                                                        }
+                                                        <div class="direct-chat-text">
+                                                            @item.NoiDung
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="direct-chat-msg">
+                                                        <div class="direct-chat-info clearfix">
+                                                            <span class="direct-chat-name pull-left">@item.TaiKhoan.TenDangNhap</span>
+                                                            <span class="direct-chat-timestamp pull-right">@item.NgayTao</span>
+                                                        </div>
+                                                        @if (!string.IsNullOrEmpty(item.TaiKhoan.HinhDaiDien))
+                                                        {
+                                                            <img src="@item.TaiKhoan.HinhDaiDien" class="direct-chat-img" style="width:35px; height:35px;" alt="User Image">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="/Content/dist/img/avatar5.png" style="width:35px; height:35px;" class="direct-chat-img" alt="User Image">
+                                                        }
+                                                        <div class="direct-chat-text">
+                                                            @item.NoiDung
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                        <form action="@Url.Action("TraoDoiThongBao")" method="post" id="from-chat">
+                                            <div class="input-group">
+                                                @Html.HiddenFor(x => x.MaThongBao)
+                                                <input type="text" name="NoiDung" required placeholder="Nội dung trao đổi ..." class="form-control fixxx">
+                                                <span class="input-group-btn">
+                                                    <button type="submit" class="btn btn-warning btn-flat">Send</button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            @if (Model.MaLopHoc > 0)
+                            {
+                                <div class="form-group">
+                                    <label class="col-md-12">Mã lớp học</label>
+                                    <div class="col-md-12">
+                                        <input type="text" value="@StringHelpper.MaLopHocConvert(Model.MaLopHoc.Value)" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/ClientScripts/mvcfoolproof.unobtrusive.min.js"></script>
+
+<script>
+    $("#from-chat").submit(function (event) {
+        event.preventDefault();
+        var actionurl = event.currentTarget.action;
+        if ($(this).valid()) {
+            $.ajax({
+                url: actionurl,
+                type: 'post',
+                data: $("#from-chat").serialize(),
+                success: function (data) {
+                    if (data.IsError == false) {
+                        xemthongbao(@Model.MaThongBao);
+                    }
+                    else {
+                        alert(data.Messger);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+        return false;
+    });
+
+    try {
+        var stringImg = $('#MoreImages').val();
+        arrayImg = stringImg.split(',');
+        genderImg();
+    }
+    catch (err) { }
+
+    function genderImg() {
+        var i = 0;
+        var str = '';
+        for (i; i < arrayImg.length; i++) {
+            if (arrayImg[i] != undefined && arrayImg[i] != null && arrayImg[i] != '') {
+                var arr = arrayImg[i].split('/');
+                str += '<tr style="border-bottom: 1px beige solid;"><td><i class="fa fa-fw fa-download"></i><a href="' + arrayImg[i] + '" target="_blank">' + arr[arr.length - 1] + '</a></td></tr>'
+            }
+        }
+
+        $('#listImg').html(str);
+        $("#MoreImages").val(arrayImg.toString());
+    }
+</script>

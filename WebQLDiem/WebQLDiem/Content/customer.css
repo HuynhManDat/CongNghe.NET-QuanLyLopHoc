@@ -1,0 +1,15 @@
+﻿.field-validation-error {
+    color: red;
+}
+
+.input-validation-error {
+    border-color: red;
+}
+
+.validation-summary-errors ul li {
+    color: red;
+}
+
+.w100 {
+    width: 100px;
+}

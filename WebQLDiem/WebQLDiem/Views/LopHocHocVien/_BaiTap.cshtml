@@ -1,0 +1,149 @@
+﻿@model LopHoc
+@{
+    Layout = null;
+    var MaTaiKhoan = 0;
+    HttpCookie id = Request.Cookies.Get("Id");
+    if (id != null)
+    {
+        MaTaiKhoan = int.Parse(id.Value);
+    }
+}
+
+@foreach (var item in Model.ChuDes.ToList())
+{
+    <div class="box box-info box-solid">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-pencil margin-r-5"></i>Chủ đề: @item.TenChuDe</h3>
+            <a class="btn btn-default pull-right" onclick="xoachude(@Model.MaLopHoc, @item.MaChuDe);">Xóa</a>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            @if (item.BaiTaps.Where(x => x.MaLopHoc == Model.MaLopHoc).Count() == 0 && item.TaiLieux.Where(x => x.MaLopHoc == Model.MaLopHoc).Count() == 0)
+            {
+                <p class="text-muted">
+                    Không có dữ liệu để hiển thị
+                </p>
+            }
+            else
+            {
+                <p class="text-muted">
+                    @foreach (var tailieu in item.TaiLieux.Where(x => x.MaLopHoc == Model.MaLopHoc && x.TrangThai >= (int)TrangThaiTaiLieu.GiaoTaiLieu && x.HocViens.Count(y=>y.TaiKhoan.MaTaKhoan == MaTaiKhoan) > 0 ).ToList())
+                    {
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red" onclick="xemtailieu(@tailieu.MaTaiLieu);"><i class="fa fa-file"></i></span>
+                            <div class="info-box-content" style="position: relative;">
+                                <span class="info-box-text" onclick="xemtailieu(@tailieu.MaTaiLieu);">
+                                    @if (tailieu.TrangThai == (int)TrangThaiTaiLieu.TaoTaiLieu)
+                                    {
+                                        <span class="label label-info">Tạo tài liệu</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-info">Tài liệu đã giao</span>
+                                    }
+
+                                </span>
+                                <span class="info-box-number" onclick="xemtailieu(@tailieu.MaTaiLieu);">
+                                    @tailieu.TenTaiLieu
+                                </span>
+                                @Html.Action("LoadNhanXet", new TraoDoiView { Ma = tailieu.MaTaiLieu, Type = (int)LoaiThongBao.TaiLieu })
+                            </div><!-- /.info-box-content -->
+                        </div>
+                    }
+                </p>
+                <p class="text-muted">
+                    @foreach (var baitap in item.BaiTaps.Where(x => x.MaLopHoc == Model.MaLopHoc && x.TrangThai >= (int)TrangThaiBaiTap.GiaoBaiTap && x.BaiTap_HocVien.Any(y => y.HocVien.MaTaiKhoan == MaTaiKhoan)).ToList())
+                    {
+                        <div class="info-box">
+                            <span class="info-box-icon bg-green" onclick="xembaitap(@baitap.MaBaiTap);"><i class="fa fa-file-excel-o"></i></span>
+                            <div class="info-box-content" style="position: relative;">
+                                <span class="info-box-text" onclick="xembaitap(@baitap.MaBaiTap);">
+                                    @if (baitap.TrangThai == (int)TrangThaiBaiTap.TaoBaiTap)
+                                    {
+                                        <span class="label label-info">Tạo bài tập</span>
+                                    }
+                                    @if (baitap.BaiTap_HocVien.FirstOrDefault(y => y.HocVien.MaTaiKhoan == MaTaiKhoan).TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap)
+                                    {
+                                        <span class="label label-info">Bài tập đã giao</span>
+                                    }
+                                    @if (baitap.BaiTap_HocVien.FirstOrDefault(y => y.HocVien.MaTaiKhoan == MaTaiKhoan).TrangThai == (int)TrangThaiBaiTap.NopBaiTap)
+                                    {
+                                        <span class="label label-info">Đã nộp bài</span>
+                                    }
+                                    @if (baitap.BaiTap_HocVien.FirstOrDefault(y => y.HocVien.MaTaiKhoan == MaTaiKhoan).TrangThai == (int)TrangThaiBaiTap.ChamDiem)
+                                    {
+                                        <span class="label label-info">Đã chấm điểm</span>
+                                    }
+                                </span>
+                                <span class="info-box-number" onclick="xembaitap(@baitap.MaBaiTap);">
+                                    @baitap.TenBaiTap
+                                </span>
+                                <i>Ngày bắt đầu: @baitap.NgayBatDau - Ngày kết thúc: @baitap.NgayKetThuc</i>
+                                @Html.Action("LoadNhanXet", new TraoDoiView { Ma = baitap.MaBaiTap, Type = (int)LoaiThongBao.BaiTap })
+                            </div><!-- /.info-box-content -->
+                        </div>
+                    }
+                </p>
+            }
+        </div><!-- /.box-body -->
+    </div>
+}
+
+@foreach (var tailieu in Model.TaiLieux.Where(x => x.MaChuDe == null && x.TrangThai >= (int)TrangThaiTaiLieu.GiaoTaiLieu && x.HocViens.Count(y=>y.TaiKhoan.MaTaKhoan == MaTaiKhoan) > 0).ToList())
+{
+    <div style="border: 1px solid #00c0ef; padding: 5px; margin-bottom:10px; border-radius:5px;">
+        <div class="info-box">
+            <span class="info-box-icon bg-red" onclick="xemtailieu(@tailieu.MaTaiLieu);"><i class="fa fa-file"></i></span>
+            <div class="info-box-content" style="position: relative;">
+                <span class="info-box-text" onclick="xemtailieu(@tailieu.MaTaiLieu);">
+                    @if (tailieu.TrangThai == (int)TrangThaiTaiLieu.TaoTaiLieu)
+                    {
+                        <span class="label label-info">Tạo tài liệu</span>
+                    }
+                    else
+                    {
+                        <span class="label label-info">Tài liệu đã giao</span>
+                    }
+
+                </span>
+                <span class="info-box-number" onclick="xemtailieu(@tailieu.MaTaiLieu);">
+                    @tailieu.TenTaiLieu
+                </span>
+                @Html.Action("LoadNhanXet", new TraoDoiView { Ma = tailieu.MaTaiLieu, Type = (int)LoaiThongBao.TaiLieu })
+            </div><!-- /.info-box-content -->
+        </div>
+    </div>
+}
+
+@foreach (var baitap in Model.BaiTaps.Where(x => x.MaChuDe == null && x.TrangThai >= (int)TrangThaiBaiTap.GiaoBaiTap && x.BaiTap_HocVien.Any(y => y.HocVien.MaTaiKhoan == MaTaiKhoan)).ToList())
+{
+    <div style="border: 1px solid #00c0ef; padding: 5px; margin-bottom:10px; border-radius:5px;">
+        <div class="info-box">
+            <span class="info-box-icon bg-green" onclick="xembaitap(@baitap.MaBaiTap);"><i class="fa fa-file-excel-o"></i></span>
+            <div class="info-box-content" style="position: relative;">
+                <span class="info-box-text" onclick="xembaitap(@baitap.MaBaiTap);">
+                    @if (baitap.TrangThai == (int)TrangThaiBaiTap.TaoBaiTap)
+                    {
+                        <span class="label label-info">Tạo bài tập</span>
+                    }
+                    @if (baitap.BaiTap_HocVien.FirstOrDefault(y => y.HocVien.MaTaiKhoan == MaTaiKhoan).TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap)
+                    {
+                        <span class="label label-info">Bài tập đã giao</span>
+                    }
+                    @if (baitap.BaiTap_HocVien.FirstOrDefault(y => y.HocVien.MaTaiKhoan == MaTaiKhoan).TrangThai == (int)TrangThaiBaiTap.NopBaiTap)
+                    {
+                        <span class="label label-info">Đã nộp bài</span>
+                    }
+                    @if (baitap.BaiTap_HocVien.FirstOrDefault(y => y.HocVien.MaTaiKhoan == MaTaiKhoan).TrangThai == (int)TrangThaiBaiTap.ChamDiem)
+                    {
+                        <span class="label label-info">Đã chấm điểm</span>
+                    }
+                </span>
+                <span class="info-box-number" onclick="xembaitap(@baitap.MaBaiTap);">
+                    @baitap.TenBaiTap
+                </span>
+                <i>Ngày bắt đầu: @baitap.NgayBatDau - Ngày kết thúc: @baitap.NgayKetThuc</i>
+                @Html.Action("LoadNhanXet", new TraoDoiView { Ma = baitap.MaBaiTap, Type = (int)LoaiThongBao.BaiTap })
+            </div><!-- /.info-box-content -->
+        </div>
+    </div>
+}

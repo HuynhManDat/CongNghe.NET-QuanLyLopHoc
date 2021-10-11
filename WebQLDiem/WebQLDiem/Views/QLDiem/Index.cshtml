@@ -1,0 +1,194 @@
+﻿@model List<DiemBaiTap>
+@{
+    ViewBag.Title = "Quản lý điểm";
+    ViewBag.Controller = "Điểm";
+    ViewBag.QuanLy = "active";
+    ViewBag.QLDiem = "active";
+    ViewBag.Id = "view-null";
+
+    var malop = 0;
+    if (ViewBag.MaLop != null)
+    {
+        malop = (int)ViewBag.MaLop;
+    }
+
+    var mahovien = 0;
+    if (ViewBag.MaHocVien != null)
+    {
+        mahovien = (int)ViewBag.MaHocVien;
+    }
+
+    var db = new WebQLDiemEntities();
+    var listLop = new List<SelectListItem>();
+    listLop.Add(new SelectListItem() { Value = "0", Text = "==Chọn lớp==" });
+    foreach (var item in db.LopHocs.ToList())
+    {
+        listLop.Add(new SelectListItem { Value = item.MaLopHoc.ToString(), Text = item.TenLopHoc, Selected = malop == item.MaLopHoc });
+    }
+
+    var listHocVien = new List<SelectListItem>();
+    listHocVien.Add(new SelectListItem() { Value = "0", Text = "==Chọn học viên==" });
+    foreach (var item in db.HocViens.ToList())
+    {
+        listHocVien.Add(new SelectListItem { Value = item.MaHocVien.ToString(), Text = item.TenHocVien, Selected = mahovien == item.MaHocVien });
+    }
+}
+<style>
+    .w150 {
+        width: 150px !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form action="@Url.Action("Index")" method="get" class="form-horizontal">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="col-md-3">
+                                <label>Lớp học</label>
+                                @Html.DropDownList("MaLopHoc", listLop, new Dictionary<string, object>
+                                {
+                                    {"class", "form-control select2"}
+                                })
+                            </div>
+                            <div class="col-md-3">
+                                <label>Từ ngày</label>
+                                @Html.TextBox("TuNgay", null, new Dictionary<string, object>
+                                {
+                                    {"class", "form-control datetimepicker"},
+                                    {"value", ViewBag.TuNgay }
+                                })
+                            </div>
+                            <div class="col-md-3">
+                                <label>Đến ngày</label>
+                                @Html.TextBox("DenNgay", null, new Dictionary<string, object>
+                                {
+                                    {"class", "form-control datetimepicker"},
+                                    {"value", ViewBag.DenNgay }
+                                })
+                            </div>
+                            <div class="col-md-3">
+                                <label>Lớp học</label>
+                                @Html.DropDownList("MaHocVien", listHocVien, new Dictionary<string, object>
+                                {
+                                    {"class", "form-control select2"}
+                                })
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn btn-info" type="submit">Lọc</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <br />
+                <br />
+
+                <table id="example2" class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="text-align:center">Hoc viên</th>
+                            @foreach (var item in Model.FirstOrDefault().DSLopHoc)
+                            {
+                                if (item.DSBaiTap.Count > 0)
+                                {
+                                    if (!string.IsNullOrEmpty(item.TenLopHoc))
+                                    {
+                                        <th colspan="@Html.Raw(item.DSBaiTap.Count * 2)" style="text-align:center">@item.TenLopHoc</th>
+                                    }
+                                }
+                            }
+                        </tr>
+                        <tr>
+                            @foreach (var item in Model.FirstOrDefault().DSLopHoc)
+                            {
+                                if (item.DSBaiTap.Count > 0)
+                                {
+                                    if (!string.IsNullOrEmpty(item.TenLopHoc))
+                                    {
+                                        foreach (var bt in item.DSBaiTap)
+                                        {
+                                            if (!string.IsNullOrEmpty(bt.TenBaiTap))
+                                            {
+                                                <th colspan="2" style="text-align:center">@bt.TenBaiTap</th>
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        </tr>
+                        <tr>
+                            <th style="text-align:center">Điểm</th>
+                            @foreach (var item in Model.FirstOrDefault().DSLopHoc)
+                            {
+                                if (item.DSBaiTap.Count > 0)
+                                {
+                                    if (!string.IsNullOrEmpty(item.TenLopHoc))
+                                    {
+                                        foreach (var bt in item.DSBaiTap)
+                                        {
+                                            if (!string.IsNullOrEmpty(bt.TenBaiTap))
+                                            {
+                                                <th style="text-align:center">Học tập</th>
+                                                <th style="text-align:center">Chuyên cần</th>
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.TenHocVien
+                                </td>
+                                @foreach (var lop in item.DSLopHoc)
+                                {
+                                    if (lop.DSBaiTap.Count > 0)
+                                    {
+                                        if (!string.IsNullOrEmpty(lop.TenLopHoc))
+                                        {
+                                            foreach (var bt in lop.DSBaiTap)
+                                            {
+                                                if (!string.IsNullOrEmpty(bt.TenBaiTap))
+                                                {
+                                                    if (bt.ThangDiem > 0)
+                                                    {
+                                                        <td>@bt.DiemHocTap/@bt.ThangDiem</td>
+                                                        <td>@bt.DiemChuyenCan/@bt.ThangDiemChuyenCan</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                        <td></td>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".select2").select2();
+        });
+    </script>
+}

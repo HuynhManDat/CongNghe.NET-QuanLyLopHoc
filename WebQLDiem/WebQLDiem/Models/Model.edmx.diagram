@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="09168e358f964cf49528b3e7adc834b1" Name="Diagram1">
+        <EntityTypeShape EntityType="WebQLDiemModel.BaiTap" Width="1.5" PointX="6" PointY="14.5" />
+        <EntityTypeShape EntityType="WebQLDiemModel.BaiTap_HocVien" Width="1.5" PointX="8.25" PointY="13.75" />
+        <EntityTypeShape EntityType="WebQLDiemModel.BaiTap_NhanXet" Width="1.5" PointX="11.25" PointY="15.625" />
+        <EntityTypeShape EntityType="WebQLDiemModel.BaiTapTepDinhKem" Width="1.5" PointX="8.25" PointY="18.625" />
+        <EntityTypeShape EntityType="WebQLDiemModel.ChuDe" Width="1.5" PointX="3" PointY="16.375" />
+        <EntityTypeShape EntityType="WebQLDiemModel.GiangVien" Width="1.5" PointX="3" PointY="27.625" />
+        <EntityTypeShape EntityType="WebQLDiemModel.HocVien" Width="1.5" PointX="3" PointY="12.125" />
+        <EntityTypeShape EntityType="WebQLDiemModel.LopHoc" Width="1.5" PointX="5.25" PointY="20.125" />
+        <EntityTypeShape EntityType="WebQLDiemModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebQLDiemModel.TaiKhoan" Width="1.5" PointX="0.75" PointY="14.375" />
+        <EntityTypeShape EntityType="WebQLDiemModel.TaiKhoan_ThongBao" Width="1.5" PointX="3" PointY="21.25" />
+        <EntityTypeShape EntityType="WebQLDiemModel.TaiLieu" Width="1.5" PointX="10.5" PointY="19.25" />
+        <EntityTypeShape EntityType="WebQLDiemModel.TaiLieu_NhanXet" Width="1.5" PointX="12.75" PointY="21.5" />
+        <EntityTypeShape EntityType="WebQLDiemModel.TaiLieuTepDinhKem" Width="1.5" PointX="13.75" PointY="17.5" />
+        <EntityTypeShape EntityType="WebQLDiemModel.ThongBao" Width="1.5" PointX="10.5" PointY="11.625" />
+        <EntityTypeShape EntityType="WebQLDiemModel.ThongBao_NhanXet" Width="1.5" PointX="13.75" PointY="14.25" />
+        <EntityTypeShape EntityType="WebQLDiemModel.ThongBaoTepDinhKem" Width="1.5" PointX="12.75" PointY="10.25" />
+        <AssociationConnector Association="WebQLDiemModel.FK_BaiTap_ChuDe" />
+        <AssociationConnector Association="WebQLDiemModel.FK_BaiTap_LopHoc" />
+        <AssociationConnector Association="WebQLDiemModel.FK_BaiTap_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_BaiTap_HocVien_BaiTap" />
+        <AssociationConnector Association="WebQLDiemModel.FK_BaiTapTepDinhKem_BaiTap" />
+        <AssociationConnector Association="WebQLDiemModel.FK_NhanXet_BaiTap" />
+        <AssociationConnector Association="WebQLDiemModel.FK_BaiTap_HocVien_HocVien" />
+        <AssociationConnector Association="WebQLDiemModel.FK_NhanXet_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_BaiTapTepDinhKem_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_ChuDe_LopHoc" />
+        <AssociationConnector Association="WebQLDiemModel.FK_ChuDe_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_TaiLieu_ChuDe" />
+        <AssociationConnector Association="WebQLDiemModel.FK_GiangVien_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_HocVien_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_LopHoc_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_TaiLieu_LopHoc" />
+        <AssociationConnector Association="WebQLDiemModel.FK_ThongBao_LopHoc" />
+        <AssociationConnector Association="WebQLDiemModel.FK_TaiKhoan_ThongBao_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_TaiLieu_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_TaiLieu_NhanXet_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_TaiLieuTepDinhKem_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_ThongBao_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_ThongBao_NhanXet_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_ThongBaoTepDinhKem_TaiKhoan" />
+        <AssociationConnector Association="WebQLDiemModel.FK_TaiLieu_NhanXet_TaiLieu" />
+        <AssociationConnector Association="WebQLDiemModel.FK_TaiLieuTepDinhKem_TaiLieu" />
+        <AssociationConnector Association="WebQLDiemModel.FK_ThongBao_NhanXet_ThongBao" />
+        <AssociationConnector Association="WebQLDiemModel.FK_ThongBaoTepDinhKem_ThongBao" />
+        <AssociationConnector Association="WebQLDiemModel.LopHoc_GiangVien" />
+        <AssociationConnector Association="WebQLDiemModel.LopHoc_HocVien" />
+        <AssociationConnector Association="WebQLDiemModel.TaiLieu_HocVien" />
+        <AssociationConnector Association="WebQLDiemModel.ThongBao_HocVien" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

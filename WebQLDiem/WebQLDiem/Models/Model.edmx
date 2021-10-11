@@ -1,0 +1,1865 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WebQLDiemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BaiTap">
+          <Key>
+            <PropertyRef Name="MaBaiTap" />
+          </Key>
+          <Property Name="MaBaiTap" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenBaiTap" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="MoTa" Type="nvarchar(max)" />
+          <Property Name="ThangDiem" Type="int" Nullable="false" />
+          <Property Name="MaLopHoc" Type="int" Nullable="false" />
+          <Property Name="NgayBatDau" Type="datetime" Nullable="false" />
+          <Property Name="NgayKetThuc" Type="datetime" Nullable="false" />
+          <Property Name="NguoiTao" Type="int" Nullable="false" />
+          <Property Name="MaChuDe" Type="int" />
+          <Property Name="TrangThai" Type="int" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="ThangDiemChuyenCan" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BaiTap-HocVien">
+          <Key>
+            <PropertyRef Name="MaBaiTap" />
+            <PropertyRef Name="MaHocVien" />
+          </Key>
+          <Property Name="MaBaiTap" Type="int" Nullable="false" />
+          <Property Name="MaHocVien" Type="int" Nullable="false" />
+          <Property Name="TrangThai" Type="int" />
+          <Property Name="NgayGiao" Type="datetime" />
+          <Property Name="NgayNop" Type="datetime" />
+          <Property Name="NgayChamDiem" Type="datetime" />
+          <Property Name="DiemHocTap" Type="int" />
+          <Property Name="DiemChuyenCan" Type="int" />
+          <Property Name="NhanXetGiangVien" Type="nvarchar" MaxLength="500" />
+          <Property Name="TepDinhKem" Type="nvarchar" MaxLength="1000" />
+          <Property Name="NoiDungGuiBai" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="BaiTap-NhanXet">
+          <Key>
+            <PropertyRef Name="MaNhanXet" />
+          </Key>
+          <Property Name="MaNhanXet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoiDung" Type="nvarchar" MaxLength="500" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="NguoiTao" Type="int" />
+          <Property Name="MaBaiTap" Type="int" />
+        </EntityType>
+        <EntityType Name="BaiTapTepDinhKem">
+          <Key>
+            <PropertyRef Name="MaTepDinhKem" />
+          </Key>
+          <Property Name="MaTepDinhKem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaBaiTap" Type="int" />
+          <Property Name="DuongDan" Type="nvarchar" MaxLength="500" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="NguoiTao" Type="int" />
+        </EntityType>
+        <EntityType Name="ChuDe">
+          <Key>
+            <PropertyRef Name="MaChuDe" />
+          </Key>
+          <Property Name="MaChuDe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenChuDe" Type="nvarchar" MaxLength="150" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="NguoiTao" Type="int" />
+          <Property Name="MaLopHoc" Type="int" />
+        </EntityType>
+        <EntityType Name="GiangVien">
+          <Key>
+            <PropertyRef Name="MaGiangVien" />
+          </Key>
+          <Property Name="MaGiangVien" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenGiangVien" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SoDienThoai" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="500" />
+          <Property Name="MaTaiKhoan" Type="int" />
+        </EntityType>
+        <EntityType Name="HocVien">
+          <Key>
+            <PropertyRef Name="MaHocVien" />
+          </Key>
+          <Property Name="MaHocVien" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenHocVien" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SoDienThoai" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="500" />
+          <Property Name="MaTaiKhoan" Type="int" />
+        </EntityType>
+        <EntityType Name="LopHoc">
+          <Key>
+            <PropertyRef Name="MaLopHoc" />
+          </Key>
+          <Property Name="MaLopHoc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenLopHoc" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MoTa" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="500" />
+          <Property Name="Phong" Type="nvarchar" MaxLength="100" />
+          <Property Name="ChuDe" Type="nvarchar" MaxLength="100" />
+          <Property Name="NgayTao" Type="datetime" Nullable="false" />
+          <Property Name="NguoiTao" Type="int" Nullable="false" />
+          <Property Name="TrangThai" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LopHoc-GiangVien">
+          <Key>
+            <PropertyRef Name="MaLopHoc" />
+            <PropertyRef Name="MaGiangVien" />
+          </Key>
+          <Property Name="MaLopHoc" Type="int" Nullable="false" />
+          <Property Name="MaGiangVien" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LopHoc-HocVien">
+          <Key>
+            <PropertyRef Name="MaLopHoc" />
+            <PropertyRef Name="MaHocVien" />
+          </Key>
+          <Property Name="MaLopHoc" Type="int" Nullable="false" />
+          <Property Name="MaHocVien" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="MaTaKhoan" />
+          </Key>
+          <Property Name="MaTaKhoan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenDangNhap" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MatKhau" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="LoaiTaiKhoan" Type="int" />
+          <Property Name="HinhDaiDien" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="TaiKhoan-ThongBao">
+          <Key>
+            <PropertyRef Name="MaThongBao" />
+          </Key>
+          <Property Name="MaThongBao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaTaiKhoan" Type="int" />
+          <Property Name="TieuDe" Type="nvarchar" MaxLength="100" />
+          <Property Name="NoiDung" Type="nvarchar" MaxLength="1000" />
+          <Property Name="NgayTao" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TaiLieu">
+          <Key>
+            <PropertyRef Name="MaTaiLieu" />
+          </Key>
+          <Property Name="MaTaiLieu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaLopHoc" Type="int" />
+          <Property Name="TenTaiLieu" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="MoTa" Type="nvarchar(max)" />
+          <Property Name="NgayTao" Type="datetime" Nullable="false" />
+          <Property Name="NguoiTao" Type="int" Nullable="false" />
+          <Property Name="TrangThai" Type="int" />
+          <Property Name="MaChuDe" Type="int" />
+        </EntityType>
+        <EntityType Name="TaiLieu-HocVien">
+          <Key>
+            <PropertyRef Name="MaTaiLieu" />
+            <PropertyRef Name="MaHocVien" />
+          </Key>
+          <Property Name="MaTaiLieu" Type="int" Nullable="false" />
+          <Property Name="MaHocVien" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaiLieu-NhanXet">
+          <Key>
+            <PropertyRef Name="MaNhanXet" />
+          </Key>
+          <Property Name="MaNhanXet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaTaiLieu" Type="int" />
+          <Property Name="NoiDung" Type="nvarchar" MaxLength="500" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="NguoiTao" Type="int" />
+        </EntityType>
+        <EntityType Name="TaiLieuTepDinhKem">
+          <Key>
+            <PropertyRef Name="MaTepDinhKem" />
+          </Key>
+          <Property Name="MaTepDinhKem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaTaiLieu" Type="int" />
+          <Property Name="DuongDan" Type="nvarchar" MaxLength="500" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="NguoiTao" Type="int" />
+        </EntityType>
+        <EntityType Name="ThongBao">
+          <Key>
+            <PropertyRef Name="MaThongBao" />
+          </Key>
+          <Property Name="MaThongBao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoiDung" Type="nvarchar" MaxLength="500" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="NguoiTao" Type="int" />
+          <Property Name="MaLopHoc" Type="int" />
+        </EntityType>
+        <EntityType Name="ThongBao-HocVien">
+          <Key>
+            <PropertyRef Name="MaThongBao" />
+            <PropertyRef Name="MaHocVien" />
+          </Key>
+          <Property Name="MaThongBao" Type="int" Nullable="false" />
+          <Property Name="MaHocVien" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ThongBao-NhanXet">
+          <Key>
+            <PropertyRef Name="MaNhanXet" />
+          </Key>
+          <Property Name="MaNhanXet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaThongBao" Type="int" />
+          <Property Name="NoiDung" Type="nvarchar" MaxLength="500" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="NguoiTao" Type="int" />
+        </EntityType>
+        <EntityType Name="ThongBaoTepDinhKem">
+          <Key>
+            <PropertyRef Name="MaTepDinhKem" />
+          </Key>
+          <Property Name="MaTepDinhKem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaThongBao" Type="int" />
+          <Property Name="DuongDan" Type="nvarchar" MaxLength="500" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="NguoiTao" Type="int" />
+        </EntityType>
+        <Association Name="FK_BaiTap_ChuDe">
+          <End Role="ChuDe" Type="Self.ChuDe" Multiplicity="0..1" />
+          <End Role="BaiTap" Type="Self.BaiTap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuDe">
+              <PropertyRef Name="MaChuDe" />
+            </Principal>
+            <Dependent Role="BaiTap">
+              <PropertyRef Name="MaChuDe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTap_LopHoc">
+          <End Role="LopHoc" Type="Self.LopHoc" Multiplicity="1" />
+          <End Role="BaiTap" Type="Self.BaiTap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="BaiTap">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTap_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1" />
+          <End Role="BaiTap" Type="Self.BaiTap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="BaiTap">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTap-HocVien_BaiTap">
+          <End Role="BaiTap" Type="Self.BaiTap" Multiplicity="1" />
+          <End Role="BaiTap-HocVien" Type="Self.BaiTap-HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaiTap">
+              <PropertyRef Name="MaBaiTap" />
+            </Principal>
+            <Dependent Role="BaiTap-HocVien">
+              <PropertyRef Name="MaBaiTap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTap-HocVien_HocVien">
+          <End Role="HocVien" Type="Self.HocVien" Multiplicity="1" />
+          <End Role="BaiTap-HocVien" Type="Self.BaiTap-HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Principal>
+            <Dependent Role="BaiTap-HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTapTepDinhKem_BaiTap">
+          <End Role="BaiTap" Type="Self.BaiTap" Multiplicity="0..1" />
+          <End Role="BaiTapTepDinhKem" Type="Self.BaiTapTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaiTap">
+              <PropertyRef Name="MaBaiTap" />
+            </Principal>
+            <Dependent Role="BaiTapTepDinhKem">
+              <PropertyRef Name="MaBaiTap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTapTepDinhKem_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="BaiTapTepDinhKem" Type="Self.BaiTapTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="BaiTapTepDinhKem">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChuDe_LopHoc">
+          <End Role="LopHoc" Type="Self.LopHoc" Multiplicity="0..1" />
+          <End Role="ChuDe" Type="Self.ChuDe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="ChuDe">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChuDe_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="ChuDe" Type="Self.ChuDe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="ChuDe">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GiangVien_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="GiangVien">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HocVien_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="HocVien" Type="Self.HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="HocVien">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LopHoc_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1" />
+          <End Role="LopHoc" Type="Self.LopHoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="LopHoc">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LopHoc-GiangVien_GiangVien">
+          <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="1" />
+          <End Role="LopHoc-GiangVien" Type="Self.LopHoc-GiangVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GiangVien">
+              <PropertyRef Name="MaGiangVien" />
+            </Principal>
+            <Dependent Role="LopHoc-GiangVien">
+              <PropertyRef Name="MaGiangVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LopHoc-GiangVien_LopHoc">
+          <End Role="LopHoc" Type="Self.LopHoc" Multiplicity="1" />
+          <End Role="LopHoc-GiangVien" Type="Self.LopHoc-GiangVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="LopHoc-GiangVien">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LopHoc-HocVien_HocVien">
+          <End Role="HocVien" Type="Self.HocVien" Multiplicity="1" />
+          <End Role="LopHoc-HocVien" Type="Self.LopHoc-HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Principal>
+            <Dependent Role="LopHoc-HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LopHoc-HocVien_LopHoc">
+          <End Role="LopHoc" Type="Self.LopHoc" Multiplicity="1" />
+          <End Role="LopHoc-HocVien" Type="Self.LopHoc-HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="LopHoc-HocVien">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NhanXet_BaiTap">
+          <End Role="BaiTap" Type="Self.BaiTap" Multiplicity="0..1" />
+          <End Role="BaiTap-NhanXet" Type="Self.BaiTap-NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaiTap">
+              <PropertyRef Name="MaBaiTap" />
+            </Principal>
+            <Dependent Role="BaiTap-NhanXet">
+              <PropertyRef Name="MaBaiTap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NhanXet_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="BaiTap-NhanXet" Type="Self.BaiTap-NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="BaiTap-NhanXet">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiKhoan-ThongBao_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="TaiKhoan-ThongBao" Type="Self.TaiKhoan-ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="TaiKhoan-ThongBao">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu_ChuDe">
+          <End Role="ChuDe" Type="Self.ChuDe" Multiplicity="0..1" />
+          <End Role="TaiLieu" Type="Self.TaiLieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuDe">
+              <PropertyRef Name="MaChuDe" />
+            </Principal>
+            <Dependent Role="TaiLieu">
+              <PropertyRef Name="MaChuDe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu_LopHoc">
+          <End Role="LopHoc" Type="Self.LopHoc" Multiplicity="0..1" />
+          <End Role="TaiLieu" Type="Self.TaiLieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="TaiLieu">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1" />
+          <End Role="TaiLieu" Type="Self.TaiLieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="TaiLieu">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu-HocVien_HocVien">
+          <End Role="HocVien" Type="Self.HocVien" Multiplicity="1" />
+          <End Role="TaiLieu-HocVien" Type="Self.TaiLieu-HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Principal>
+            <Dependent Role="TaiLieu-HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu-HocVien_TaiLieu">
+          <End Role="TaiLieu" Type="Self.TaiLieu" Multiplicity="1" />
+          <End Role="TaiLieu-HocVien" Type="Self.TaiLieu-HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiLieu">
+              <PropertyRef Name="MaTaiLieu" />
+            </Principal>
+            <Dependent Role="TaiLieu-HocVien">
+              <PropertyRef Name="MaTaiLieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu-NhanXet_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="TaiLieu-NhanXet" Type="Self.TaiLieu-NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="TaiLieu-NhanXet">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu-NhanXet_TaiLieu">
+          <End Role="TaiLieu" Type="Self.TaiLieu" Multiplicity="0..1" />
+          <End Role="TaiLieu-NhanXet" Type="Self.TaiLieu-NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiLieu">
+              <PropertyRef Name="MaTaiLieu" />
+            </Principal>
+            <Dependent Role="TaiLieu-NhanXet">
+              <PropertyRef Name="MaTaiLieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieuTepDinhKem_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="TaiLieuTepDinhKem" Type="Self.TaiLieuTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="TaiLieuTepDinhKem">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieuTepDinhKem_TaiLieu">
+          <End Role="TaiLieu" Type="Self.TaiLieu" Multiplicity="0..1" />
+          <End Role="TaiLieuTepDinhKem" Type="Self.TaiLieuTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiLieu">
+              <PropertyRef Name="MaTaiLieu" />
+            </Principal>
+            <Dependent Role="TaiLieuTepDinhKem">
+              <PropertyRef Name="MaTaiLieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao_LopHoc">
+          <End Role="LopHoc" Type="Self.LopHoc" Multiplicity="0..1" />
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao-HocVien_HocVien">
+          <End Role="HocVien" Type="Self.HocVien" Multiplicity="1" />
+          <End Role="ThongBao-HocVien" Type="Self.ThongBao-HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Principal>
+            <Dependent Role="ThongBao-HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao-HocVien_ThongBao">
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="1" />
+          <End Role="ThongBao-HocVien" Type="Self.ThongBao-HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThongBao">
+              <PropertyRef Name="MaThongBao" />
+            </Principal>
+            <Dependent Role="ThongBao-HocVien">
+              <PropertyRef Name="MaThongBao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao-NhanXet_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="ThongBao-NhanXet" Type="Self.ThongBao-NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="ThongBao-NhanXet">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao-NhanXet_ThongBao">
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="0..1" />
+          <End Role="ThongBao-NhanXet" Type="Self.ThongBao-NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThongBao">
+              <PropertyRef Name="MaThongBao" />
+            </Principal>
+            <Dependent Role="ThongBao-NhanXet">
+              <PropertyRef Name="MaThongBao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBaoTepDinhKem_TaiKhoan">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+          <End Role="ThongBaoTepDinhKem" Type="Self.ThongBaoTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="ThongBaoTepDinhKem">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBaoTepDinhKem_ThongBao">
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="0..1" />
+          <End Role="ThongBaoTepDinhKem" Type="Self.ThongBaoTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThongBao">
+              <PropertyRef Name="MaThongBao" />
+            </Principal>
+            <Dependent Role="ThongBaoTepDinhKem">
+              <PropertyRef Name="MaThongBao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebQLDiemModelStoreContainer">
+          <EntitySet Name="BaiTap" EntityType="Self.BaiTap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaiTap-HocVien" EntityType="Self.BaiTap-HocVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaiTap-NhanXet" EntityType="Self.BaiTap-NhanXet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaiTapTepDinhKem" EntityType="Self.BaiTapTepDinhKem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChuDe" EntityType="Self.ChuDe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GiangVien" EntityType="Self.GiangVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HocVien" EntityType="Self.HocVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LopHoc" EntityType="Self.LopHoc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LopHoc-GiangVien" EntityType="Self.LopHoc-GiangVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LopHoc-HocVien" EntityType="Self.LopHoc-HocVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiKhoan-ThongBao" EntityType="Self.TaiKhoan-ThongBao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiLieu" EntityType="Self.TaiLieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiLieu-HocVien" EntityType="Self.TaiLieu-HocVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiLieu-NhanXet" EntityType="Self.TaiLieu-NhanXet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiLieuTepDinhKem" EntityType="Self.TaiLieuTepDinhKem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThongBao" EntityType="Self.ThongBao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThongBao-HocVien" EntityType="Self.ThongBao-HocVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThongBao-NhanXet" EntityType="Self.ThongBao-NhanXet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThongBaoTepDinhKem" EntityType="Self.ThongBaoTepDinhKem" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BaiTap_ChuDe" Association="Self.FK_BaiTap_ChuDe">
+            <End Role="ChuDe" EntitySet="ChuDe" />
+            <End Role="BaiTap" EntitySet="BaiTap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTap_LopHoc" Association="Self.FK_BaiTap_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHoc" />
+            <End Role="BaiTap" EntitySet="BaiTap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTap_TaiKhoan" Association="Self.FK_BaiTap_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="BaiTap" EntitySet="BaiTap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTap-HocVien_BaiTap" Association="Self.FK_BaiTap-HocVien_BaiTap">
+            <End Role="BaiTap" EntitySet="BaiTap" />
+            <End Role="BaiTap-HocVien" EntitySet="BaiTap-HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTap-HocVien_HocVien" Association="Self.FK_BaiTap-HocVien_HocVien">
+            <End Role="HocVien" EntitySet="HocVien" />
+            <End Role="BaiTap-HocVien" EntitySet="BaiTap-HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTapTepDinhKem_BaiTap" Association="Self.FK_BaiTapTepDinhKem_BaiTap">
+            <End Role="BaiTap" EntitySet="BaiTap" />
+            <End Role="BaiTapTepDinhKem" EntitySet="BaiTapTepDinhKem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTapTepDinhKem_TaiKhoan" Association="Self.FK_BaiTapTepDinhKem_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="BaiTapTepDinhKem" EntitySet="BaiTapTepDinhKem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChuDe_LopHoc" Association="Self.FK_ChuDe_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHoc" />
+            <End Role="ChuDe" EntitySet="ChuDe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChuDe_TaiKhoan" Association="Self.FK_ChuDe_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="ChuDe" EntitySet="ChuDe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GiangVien_TaiKhoan" Association="Self.FK_GiangVien_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="GiangVien" EntitySet="GiangVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HocVien_TaiKhoan" Association="Self.FK_HocVien_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="HocVien" EntitySet="HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LopHoc_TaiKhoan" Association="Self.FK_LopHoc_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="LopHoc" EntitySet="LopHoc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LopHoc-GiangVien_GiangVien" Association="Self.FK_LopHoc-GiangVien_GiangVien">
+            <End Role="GiangVien" EntitySet="GiangVien" />
+            <End Role="LopHoc-GiangVien" EntitySet="LopHoc-GiangVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LopHoc-GiangVien_LopHoc" Association="Self.FK_LopHoc-GiangVien_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHoc" />
+            <End Role="LopHoc-GiangVien" EntitySet="LopHoc-GiangVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LopHoc-HocVien_HocVien" Association="Self.FK_LopHoc-HocVien_HocVien">
+            <End Role="HocVien" EntitySet="HocVien" />
+            <End Role="LopHoc-HocVien" EntitySet="LopHoc-HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LopHoc-HocVien_LopHoc" Association="Self.FK_LopHoc-HocVien_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHoc" />
+            <End Role="LopHoc-HocVien" EntitySet="LopHoc-HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NhanXet_BaiTap" Association="Self.FK_NhanXet_BaiTap">
+            <End Role="BaiTap" EntitySet="BaiTap" />
+            <End Role="BaiTap-NhanXet" EntitySet="BaiTap-NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NhanXet_TaiKhoan" Association="Self.FK_NhanXet_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="BaiTap-NhanXet" EntitySet="BaiTap-NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoan-ThongBao_TaiKhoan" Association="Self.FK_TaiKhoan-ThongBao_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="TaiKhoan-ThongBao" EntitySet="TaiKhoan-ThongBao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu_ChuDe" Association="Self.FK_TaiLieu_ChuDe">
+            <End Role="ChuDe" EntitySet="ChuDe" />
+            <End Role="TaiLieu" EntitySet="TaiLieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu_LopHoc" Association="Self.FK_TaiLieu_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHoc" />
+            <End Role="TaiLieu" EntitySet="TaiLieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu_TaiKhoan" Association="Self.FK_TaiLieu_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="TaiLieu" EntitySet="TaiLieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu-HocVien_HocVien" Association="Self.FK_TaiLieu-HocVien_HocVien">
+            <End Role="HocVien" EntitySet="HocVien" />
+            <End Role="TaiLieu-HocVien" EntitySet="TaiLieu-HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu-HocVien_TaiLieu" Association="Self.FK_TaiLieu-HocVien_TaiLieu">
+            <End Role="TaiLieu" EntitySet="TaiLieu" />
+            <End Role="TaiLieu-HocVien" EntitySet="TaiLieu-HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu-NhanXet_TaiKhoan" Association="Self.FK_TaiLieu-NhanXet_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="TaiLieu-NhanXet" EntitySet="TaiLieu-NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu-NhanXet_TaiLieu" Association="Self.FK_TaiLieu-NhanXet_TaiLieu">
+            <End Role="TaiLieu" EntitySet="TaiLieu" />
+            <End Role="TaiLieu-NhanXet" EntitySet="TaiLieu-NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieuTepDinhKem_TaiKhoan" Association="Self.FK_TaiLieuTepDinhKem_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="TaiLieuTepDinhKem" EntitySet="TaiLieuTepDinhKem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieuTepDinhKem_TaiLieu" Association="Self.FK_TaiLieuTepDinhKem_TaiLieu">
+            <End Role="TaiLieu" EntitySet="TaiLieu" />
+            <End Role="TaiLieuTepDinhKem" EntitySet="TaiLieuTepDinhKem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao_LopHoc" Association="Self.FK_ThongBao_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHoc" />
+            <End Role="ThongBao" EntitySet="ThongBao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao_TaiKhoan" Association="Self.FK_ThongBao_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="ThongBao" EntitySet="ThongBao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao-HocVien_HocVien" Association="Self.FK_ThongBao-HocVien_HocVien">
+            <End Role="HocVien" EntitySet="HocVien" />
+            <End Role="ThongBao-HocVien" EntitySet="ThongBao-HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao-HocVien_ThongBao" Association="Self.FK_ThongBao-HocVien_ThongBao">
+            <End Role="ThongBao" EntitySet="ThongBao" />
+            <End Role="ThongBao-HocVien" EntitySet="ThongBao-HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao-NhanXet_TaiKhoan" Association="Self.FK_ThongBao-NhanXet_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="ThongBao-NhanXet" EntitySet="ThongBao-NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao-NhanXet_ThongBao" Association="Self.FK_ThongBao-NhanXet_ThongBao">
+            <End Role="ThongBao" EntitySet="ThongBao" />
+            <End Role="ThongBao-NhanXet" EntitySet="ThongBao-NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBaoTepDinhKem_TaiKhoan" Association="Self.FK_ThongBaoTepDinhKem_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="ThongBaoTepDinhKem" EntitySet="ThongBaoTepDinhKem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBaoTepDinhKem_ThongBao" Association="Self.FK_ThongBaoTepDinhKem_ThongBao">
+            <End Role="ThongBao" EntitySet="ThongBao" />
+            <End Role="ThongBaoTepDinhKem" EntitySet="ThongBaoTepDinhKem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WebQLDiemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WebQLDiemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BaiTaps" EntityType="WebQLDiemModel.BaiTap" />
+          <EntitySet Name="BaiTap_HocVien" EntityType="WebQLDiemModel.BaiTap_HocVien" />
+          <EntitySet Name="BaiTap_NhanXet" EntityType="WebQLDiemModel.BaiTap_NhanXet" />
+          <EntitySet Name="BaiTapTepDinhKems" EntityType="WebQLDiemModel.BaiTapTepDinhKem" />
+          <EntitySet Name="ChuDes" EntityType="WebQLDiemModel.ChuDe" />
+          <EntitySet Name="GiangViens" EntityType="WebQLDiemModel.GiangVien" />
+          <EntitySet Name="HocViens" EntityType="WebQLDiemModel.HocVien" />
+          <EntitySet Name="LopHocs" EntityType="WebQLDiemModel.LopHoc" />
+          <EntitySet Name="sysdiagrams" EntityType="WebQLDiemModel.sysdiagram" />
+          <EntitySet Name="TaiKhoans" EntityType="WebQLDiemModel.TaiKhoan" />
+          <EntitySet Name="TaiKhoan_ThongBao" EntityType="WebQLDiemModel.TaiKhoan_ThongBao" />
+          <EntitySet Name="TaiLieux" EntityType="WebQLDiemModel.TaiLieu" />
+          <EntitySet Name="TaiLieu_NhanXet" EntityType="WebQLDiemModel.TaiLieu_NhanXet" />
+          <EntitySet Name="TaiLieuTepDinhKems" EntityType="WebQLDiemModel.TaiLieuTepDinhKem" />
+          <EntitySet Name="ThongBaos" EntityType="WebQLDiemModel.ThongBao" />
+          <EntitySet Name="ThongBao_NhanXet" EntityType="WebQLDiemModel.ThongBao_NhanXet" />
+          <EntitySet Name="ThongBaoTepDinhKems" EntityType="WebQLDiemModel.ThongBaoTepDinhKem" />
+          <AssociationSet Name="FK_BaiTap_ChuDe" Association="WebQLDiemModel.FK_BaiTap_ChuDe">
+            <End Role="ChuDe" EntitySet="ChuDes" />
+            <End Role="BaiTap" EntitySet="BaiTaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTap_LopHoc" Association="WebQLDiemModel.FK_BaiTap_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHocs" />
+            <End Role="BaiTap" EntitySet="BaiTaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTap_TaiKhoan" Association="WebQLDiemModel.FK_BaiTap_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="BaiTap" EntitySet="BaiTaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTap_HocVien_BaiTap" Association="WebQLDiemModel.FK_BaiTap_HocVien_BaiTap">
+            <End Role="BaiTap" EntitySet="BaiTaps" />
+            <End Role="BaiTap_HocVien" EntitySet="BaiTap_HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTapTepDinhKem_BaiTap" Association="WebQLDiemModel.FK_BaiTapTepDinhKem_BaiTap">
+            <End Role="BaiTap" EntitySet="BaiTaps" />
+            <End Role="BaiTapTepDinhKem" EntitySet="BaiTapTepDinhKems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NhanXet_BaiTap" Association="WebQLDiemModel.FK_NhanXet_BaiTap">
+            <End Role="BaiTap" EntitySet="BaiTaps" />
+            <End Role="BaiTap_NhanXet" EntitySet="BaiTap_NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTap_HocVien_HocVien" Association="WebQLDiemModel.FK_BaiTap_HocVien_HocVien">
+            <End Role="HocVien" EntitySet="HocViens" />
+            <End Role="BaiTap_HocVien" EntitySet="BaiTap_HocVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NhanXet_TaiKhoan" Association="WebQLDiemModel.FK_NhanXet_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="BaiTap_NhanXet" EntitySet="BaiTap_NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiTapTepDinhKem_TaiKhoan" Association="WebQLDiemModel.FK_BaiTapTepDinhKem_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="BaiTapTepDinhKem" EntitySet="BaiTapTepDinhKems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChuDe_LopHoc" Association="WebQLDiemModel.FK_ChuDe_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHocs" />
+            <End Role="ChuDe" EntitySet="ChuDes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChuDe_TaiKhoan" Association="WebQLDiemModel.FK_ChuDe_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="ChuDe" EntitySet="ChuDes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu_ChuDe" Association="WebQLDiemModel.FK_TaiLieu_ChuDe">
+            <End Role="ChuDe" EntitySet="ChuDes" />
+            <End Role="TaiLieu" EntitySet="TaiLieux" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GiangVien_TaiKhoan" Association="WebQLDiemModel.FK_GiangVien_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="GiangVien" EntitySet="GiangViens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HocVien_TaiKhoan" Association="WebQLDiemModel.FK_HocVien_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="HocVien" EntitySet="HocViens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LopHoc_TaiKhoan" Association="WebQLDiemModel.FK_LopHoc_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="LopHoc" EntitySet="LopHocs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu_LopHoc" Association="WebQLDiemModel.FK_TaiLieu_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHocs" />
+            <End Role="TaiLieu" EntitySet="TaiLieux" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao_LopHoc" Association="WebQLDiemModel.FK_ThongBao_LopHoc">
+            <End Role="LopHoc" EntitySet="LopHocs" />
+            <End Role="ThongBao" EntitySet="ThongBaos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoan_ThongBao_TaiKhoan" Association="WebQLDiemModel.FK_TaiKhoan_ThongBao_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="TaiKhoan_ThongBao" EntitySet="TaiKhoan_ThongBao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu_TaiKhoan" Association="WebQLDiemModel.FK_TaiLieu_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="TaiLieu" EntitySet="TaiLieux" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu_NhanXet_TaiKhoan" Association="WebQLDiemModel.FK_TaiLieu_NhanXet_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="TaiLieu_NhanXet" EntitySet="TaiLieu_NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieuTepDinhKem_TaiKhoan" Association="WebQLDiemModel.FK_TaiLieuTepDinhKem_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="TaiLieuTepDinhKem" EntitySet="TaiLieuTepDinhKems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao_TaiKhoan" Association="WebQLDiemModel.FK_ThongBao_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="ThongBao" EntitySet="ThongBaos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao_NhanXet_TaiKhoan" Association="WebQLDiemModel.FK_ThongBao_NhanXet_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="ThongBao_NhanXet" EntitySet="ThongBao_NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBaoTepDinhKem_TaiKhoan" Association="WebQLDiemModel.FK_ThongBaoTepDinhKem_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+            <End Role="ThongBaoTepDinhKem" EntitySet="ThongBaoTepDinhKems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieu_NhanXet_TaiLieu" Association="WebQLDiemModel.FK_TaiLieu_NhanXet_TaiLieu">
+            <End Role="TaiLieu" EntitySet="TaiLieux" />
+            <End Role="TaiLieu_NhanXet" EntitySet="TaiLieu_NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiLieuTepDinhKem_TaiLieu" Association="WebQLDiemModel.FK_TaiLieuTepDinhKem_TaiLieu">
+            <End Role="TaiLieu" EntitySet="TaiLieux" />
+            <End Role="TaiLieuTepDinhKem" EntitySet="TaiLieuTepDinhKems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao_NhanXet_ThongBao" Association="WebQLDiemModel.FK_ThongBao_NhanXet_ThongBao">
+            <End Role="ThongBao" EntitySet="ThongBaos" />
+            <End Role="ThongBao_NhanXet" EntitySet="ThongBao_NhanXet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBaoTepDinhKem_ThongBao" Association="WebQLDiemModel.FK_ThongBaoTepDinhKem_ThongBao">
+            <End Role="ThongBao" EntitySet="ThongBaos" />
+            <End Role="ThongBaoTepDinhKem" EntitySet="ThongBaoTepDinhKems" />
+          </AssociationSet>
+          <AssociationSet Name="LopHoc_GiangVien" Association="WebQLDiemModel.LopHoc_GiangVien">
+            <End Role="GiangVien" EntitySet="GiangViens" />
+            <End Role="LopHoc" EntitySet="LopHocs" />
+          </AssociationSet>
+          <AssociationSet Name="LopHoc_HocVien" Association="WebQLDiemModel.LopHoc_HocVien">
+            <End Role="HocVien" EntitySet="HocViens" />
+            <End Role="LopHoc" EntitySet="LopHocs" />
+          </AssociationSet>
+          <AssociationSet Name="TaiLieu_HocVien" Association="WebQLDiemModel.TaiLieu_HocVien">
+            <End Role="HocVien" EntitySet="HocViens" />
+            <End Role="TaiLieu" EntitySet="TaiLieux" />
+          </AssociationSet>
+          <AssociationSet Name="ThongBao_HocVien" Association="WebQLDiemModel.ThongBao_HocVien">
+            <End Role="HocVien" EntitySet="HocViens" />
+            <End Role="ThongBao" EntitySet="ThongBaos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BaiTap">
+          <Key>
+            <PropertyRef Name="MaBaiTap" />
+          </Key>
+          <Property Name="MaBaiTap" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenBaiTap" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ThangDiem" Type="Int32" Nullable="false" />
+          <Property Name="MaLopHoc" Type="Int32" Nullable="false" />
+          <Property Name="NgayBatDau" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NgayKetThuc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" Nullable="false" />
+          <Property Name="MaChuDe" Type="Int32" />
+          <Property Name="TrangThai" Type="Int32" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="ThangDiemChuyenCan" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ChuDe" Relationship="WebQLDiemModel.FK_BaiTap_ChuDe" FromRole="BaiTap" ToRole="ChuDe" />
+          <NavigationProperty Name="LopHoc" Relationship="WebQLDiemModel.FK_BaiTap_LopHoc" FromRole="BaiTap" ToRole="LopHoc" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_BaiTap_TaiKhoan" FromRole="BaiTap" ToRole="TaiKhoan" />
+          <NavigationProperty Name="BaiTap_HocVien" Relationship="WebQLDiemModel.FK_BaiTap_HocVien_BaiTap" FromRole="BaiTap" ToRole="BaiTap_HocVien" />
+          <NavigationProperty Name="BaiTapTepDinhKems" Relationship="WebQLDiemModel.FK_BaiTapTepDinhKem_BaiTap" FromRole="BaiTap" ToRole="BaiTapTepDinhKem" />
+          <NavigationProperty Name="BaiTap_NhanXet" Relationship="WebQLDiemModel.FK_NhanXet_BaiTap" FromRole="BaiTap" ToRole="BaiTap_NhanXet" />
+        </EntityType>
+        <EntityType Name="BaiTap_HocVien">
+          <Key>
+            <PropertyRef Name="MaBaiTap" />
+            <PropertyRef Name="MaHocVien" />
+          </Key>
+          <Property Name="MaBaiTap" Type="Int32" Nullable="false" />
+          <Property Name="MaHocVien" Type="Int32" Nullable="false" />
+          <Property Name="TrangThai" Type="Int32" />
+          <Property Name="NgayGiao" Type="DateTime" Precision="3" />
+          <Property Name="NgayNop" Type="DateTime" Precision="3" />
+          <Property Name="NgayChamDiem" Type="DateTime" Precision="3" />
+          <Property Name="DiemHocTap" Type="Int32" />
+          <Property Name="DiemChuyenCan" Type="Int32" />
+          <Property Name="NhanXetGiangVien" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TepDinhKem" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="NoiDungGuiBai" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BaiTap" Relationship="WebQLDiemModel.FK_BaiTap_HocVien_BaiTap" FromRole="BaiTap_HocVien" ToRole="BaiTap" />
+          <NavigationProperty Name="HocVien" Relationship="WebQLDiemModel.FK_BaiTap_HocVien_HocVien" FromRole="BaiTap_HocVien" ToRole="HocVien" />
+        </EntityType>
+        <EntityType Name="BaiTap_NhanXet">
+          <Key>
+            <PropertyRef Name="MaNhanXet" />
+          </Key>
+          <Property Name="MaNhanXet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoiDung" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" />
+          <Property Name="MaBaiTap" Type="Int32" />
+          <NavigationProperty Name="BaiTap" Relationship="WebQLDiemModel.FK_NhanXet_BaiTap" FromRole="BaiTap_NhanXet" ToRole="BaiTap" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_NhanXet_TaiKhoan" FromRole="BaiTap_NhanXet" ToRole="TaiKhoan" />
+        </EntityType>
+        <EntityType Name="BaiTapTepDinhKem">
+          <Key>
+            <PropertyRef Name="MaTepDinhKem" />
+          </Key>
+          <Property Name="MaTepDinhKem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaBaiTap" Type="Int32" />
+          <Property Name="DuongDan" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" />
+          <NavigationProperty Name="BaiTap" Relationship="WebQLDiemModel.FK_BaiTapTepDinhKem_BaiTap" FromRole="BaiTapTepDinhKem" ToRole="BaiTap" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_BaiTapTepDinhKem_TaiKhoan" FromRole="BaiTapTepDinhKem" ToRole="TaiKhoan" />
+        </EntityType>
+        <EntityType Name="ChuDe">
+          <Key>
+            <PropertyRef Name="MaChuDe" />
+          </Key>
+          <Property Name="MaChuDe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenChuDe" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" />
+          <Property Name="MaLopHoc" Type="Int32" />
+          <NavigationProperty Name="BaiTaps" Relationship="WebQLDiemModel.FK_BaiTap_ChuDe" FromRole="ChuDe" ToRole="BaiTap" />
+          <NavigationProperty Name="LopHoc" Relationship="WebQLDiemModel.FK_ChuDe_LopHoc" FromRole="ChuDe" ToRole="LopHoc" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_ChuDe_TaiKhoan" FromRole="ChuDe" ToRole="TaiKhoan" />
+          <NavigationProperty Name="TaiLieux" Relationship="WebQLDiemModel.FK_TaiLieu_ChuDe" FromRole="ChuDe" ToRole="TaiLieu" />
+        </EntityType>
+        <EntityType Name="GiangVien">
+          <Key>
+            <PropertyRef Name="MaGiangVien" />
+          </Key>
+          <Property Name="MaGiangVien" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenGiangVien" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SoDienThoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MaTaiKhoan" Type="Int32" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_GiangVien_TaiKhoan" FromRole="GiangVien" ToRole="TaiKhoan" />
+          <NavigationProperty Name="LopHocs" Relationship="WebQLDiemModel.LopHoc_GiangVien" FromRole="GiangVien" ToRole="LopHoc" />
+        </EntityType>
+        <EntityType Name="HocVien">
+          <Key>
+            <PropertyRef Name="MaHocVien" />
+          </Key>
+          <Property Name="MaHocVien" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenHocVien" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SoDienThoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MaTaiKhoan" Type="Int32" />
+          <NavigationProperty Name="BaiTap_HocVien" Relationship="WebQLDiemModel.FK_BaiTap_HocVien_HocVien" FromRole="HocVien" ToRole="BaiTap_HocVien" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_HocVien_TaiKhoan" FromRole="HocVien" ToRole="TaiKhoan" />
+          <NavigationProperty Name="LopHocs" Relationship="WebQLDiemModel.LopHoc_HocVien" FromRole="HocVien" ToRole="LopHoc" />
+          <NavigationProperty Name="TaiLieux" Relationship="WebQLDiemModel.TaiLieu_HocVien" FromRole="HocVien" ToRole="TaiLieu" />
+          <NavigationProperty Name="ThongBaos" Relationship="WebQLDiemModel.ThongBao_HocVien" FromRole="HocVien" ToRole="ThongBao" />
+        </EntityType>
+        <EntityType Name="LopHoc">
+          <Key>
+            <PropertyRef Name="MaLopHoc" />
+          </Key>
+          <Property Name="MaLopHoc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenLopHoc" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Phong" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ChuDe" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" Nullable="false" />
+          <Property Name="TrangThai" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BaiTaps" Relationship="WebQLDiemModel.FK_BaiTap_LopHoc" FromRole="LopHoc" ToRole="BaiTap" />
+          <NavigationProperty Name="ChuDes" Relationship="WebQLDiemModel.FK_ChuDe_LopHoc" FromRole="LopHoc" ToRole="ChuDe" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_LopHoc_TaiKhoan" FromRole="LopHoc" ToRole="TaiKhoan" />
+          <NavigationProperty Name="TaiLieux" Relationship="WebQLDiemModel.FK_TaiLieu_LopHoc" FromRole="LopHoc" ToRole="TaiLieu" />
+          <NavigationProperty Name="ThongBaos" Relationship="WebQLDiemModel.FK_ThongBao_LopHoc" FromRole="LopHoc" ToRole="ThongBao" />
+          <NavigationProperty Name="GiangViens" Relationship="WebQLDiemModel.LopHoc_GiangVien" FromRole="LopHoc" ToRole="GiangVien" />
+          <NavigationProperty Name="HocViens" Relationship="WebQLDiemModel.LopHoc_HocVien" FromRole="LopHoc" ToRole="HocVien" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="MaTaKhoan" />
+          </Key>
+          <Property Name="MaTaKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenDangNhap" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="LoaiTaiKhoan" Type="Int32" />
+          <Property Name="HinhDaiDien" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BaiTaps" Relationship="WebQLDiemModel.FK_BaiTap_TaiKhoan" FromRole="TaiKhoan" ToRole="BaiTap" />
+          <NavigationProperty Name="BaiTap_NhanXet" Relationship="WebQLDiemModel.FK_NhanXet_TaiKhoan" FromRole="TaiKhoan" ToRole="BaiTap_NhanXet" />
+          <NavigationProperty Name="BaiTapTepDinhKems" Relationship="WebQLDiemModel.FK_BaiTapTepDinhKem_TaiKhoan" FromRole="TaiKhoan" ToRole="BaiTapTepDinhKem" />
+          <NavigationProperty Name="ChuDes" Relationship="WebQLDiemModel.FK_ChuDe_TaiKhoan" FromRole="TaiKhoan" ToRole="ChuDe" />
+          <NavigationProperty Name="GiangViens" Relationship="WebQLDiemModel.FK_GiangVien_TaiKhoan" FromRole="TaiKhoan" ToRole="GiangVien" />
+          <NavigationProperty Name="HocViens" Relationship="WebQLDiemModel.FK_HocVien_TaiKhoan" FromRole="TaiKhoan" ToRole="HocVien" />
+          <NavigationProperty Name="LopHocs" Relationship="WebQLDiemModel.FK_LopHoc_TaiKhoan" FromRole="TaiKhoan" ToRole="LopHoc" />
+          <NavigationProperty Name="TaiKhoan_ThongBao" Relationship="WebQLDiemModel.FK_TaiKhoan_ThongBao_TaiKhoan" FromRole="TaiKhoan" ToRole="TaiKhoan_ThongBao" />
+          <NavigationProperty Name="TaiLieux" Relationship="WebQLDiemModel.FK_TaiLieu_TaiKhoan" FromRole="TaiKhoan" ToRole="TaiLieu" />
+          <NavigationProperty Name="TaiLieu_NhanXet" Relationship="WebQLDiemModel.FK_TaiLieu_NhanXet_TaiKhoan" FromRole="TaiKhoan" ToRole="TaiLieu_NhanXet" />
+          <NavigationProperty Name="TaiLieuTepDinhKems" Relationship="WebQLDiemModel.FK_TaiLieuTepDinhKem_TaiKhoan" FromRole="TaiKhoan" ToRole="TaiLieuTepDinhKem" />
+          <NavigationProperty Name="ThongBaos" Relationship="WebQLDiemModel.FK_ThongBao_TaiKhoan" FromRole="TaiKhoan" ToRole="ThongBao" />
+          <NavigationProperty Name="ThongBao_NhanXet" Relationship="WebQLDiemModel.FK_ThongBao_NhanXet_TaiKhoan" FromRole="TaiKhoan" ToRole="ThongBao_NhanXet" />
+          <NavigationProperty Name="ThongBaoTepDinhKems" Relationship="WebQLDiemModel.FK_ThongBaoTepDinhKem_TaiKhoan" FromRole="TaiKhoan" ToRole="ThongBaoTepDinhKem" />
+        </EntityType>
+        <EntityType Name="TaiKhoan_ThongBao">
+          <Key>
+            <PropertyRef Name="MaThongBao" />
+          </Key>
+          <Property Name="MaThongBao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaTaiKhoan" Type="Int32" />
+          <Property Name="TieuDe" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NoiDung" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_TaiKhoan_ThongBao_TaiKhoan" FromRole="TaiKhoan_ThongBao" ToRole="TaiKhoan" />
+        </EntityType>
+        <EntityType Name="TaiLieu">
+          <Key>
+            <PropertyRef Name="MaTaiLieu" />
+          </Key>
+          <Property Name="MaTaiLieu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaLopHoc" Type="Int32" />
+          <Property Name="TenTaiLieu" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" Nullable="false" />
+          <Property Name="TrangThai" Type="Int32" />
+          <Property Name="MaChuDe" Type="Int32" />
+          <NavigationProperty Name="ChuDe" Relationship="WebQLDiemModel.FK_TaiLieu_ChuDe" FromRole="TaiLieu" ToRole="ChuDe" />
+          <NavigationProperty Name="LopHoc" Relationship="WebQLDiemModel.FK_TaiLieu_LopHoc" FromRole="TaiLieu" ToRole="LopHoc" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_TaiLieu_TaiKhoan" FromRole="TaiLieu" ToRole="TaiKhoan" />
+          <NavigationProperty Name="TaiLieu_NhanXet" Relationship="WebQLDiemModel.FK_TaiLieu_NhanXet_TaiLieu" FromRole="TaiLieu" ToRole="TaiLieu_NhanXet" />
+          <NavigationProperty Name="TaiLieuTepDinhKems" Relationship="WebQLDiemModel.FK_TaiLieuTepDinhKem_TaiLieu" FromRole="TaiLieu" ToRole="TaiLieuTepDinhKem" />
+          <NavigationProperty Name="HocViens" Relationship="WebQLDiemModel.TaiLieu_HocVien" FromRole="TaiLieu" ToRole="HocVien" />
+        </EntityType>
+        <EntityType Name="TaiLieu_NhanXet">
+          <Key>
+            <PropertyRef Name="MaNhanXet" />
+          </Key>
+          <Property Name="MaNhanXet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaTaiLieu" Type="Int32" />
+          <Property Name="NoiDung" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_TaiLieu_NhanXet_TaiKhoan" FromRole="TaiLieu_NhanXet" ToRole="TaiKhoan" />
+          <NavigationProperty Name="TaiLieu" Relationship="WebQLDiemModel.FK_TaiLieu_NhanXet_TaiLieu" FromRole="TaiLieu_NhanXet" ToRole="TaiLieu" />
+        </EntityType>
+        <EntityType Name="TaiLieuTepDinhKem">
+          <Key>
+            <PropertyRef Name="MaTepDinhKem" />
+          </Key>
+          <Property Name="MaTepDinhKem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaTaiLieu" Type="Int32" />
+          <Property Name="DuongDan" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_TaiLieuTepDinhKem_TaiKhoan" FromRole="TaiLieuTepDinhKem" ToRole="TaiKhoan" />
+          <NavigationProperty Name="TaiLieu" Relationship="WebQLDiemModel.FK_TaiLieuTepDinhKem_TaiLieu" FromRole="TaiLieuTepDinhKem" ToRole="TaiLieu" />
+        </EntityType>
+        <EntityType Name="ThongBao">
+          <Key>
+            <PropertyRef Name="MaThongBao" />
+          </Key>
+          <Property Name="MaThongBao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoiDung" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" />
+          <Property Name="MaLopHoc" Type="Int32" />
+          <NavigationProperty Name="LopHoc" Relationship="WebQLDiemModel.FK_ThongBao_LopHoc" FromRole="ThongBao" ToRole="LopHoc" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_ThongBao_TaiKhoan" FromRole="ThongBao" ToRole="TaiKhoan" />
+          <NavigationProperty Name="ThongBao_NhanXet" Relationship="WebQLDiemModel.FK_ThongBao_NhanXet_ThongBao" FromRole="ThongBao" ToRole="ThongBao_NhanXet" />
+          <NavigationProperty Name="ThongBaoTepDinhKems" Relationship="WebQLDiemModel.FK_ThongBaoTepDinhKem_ThongBao" FromRole="ThongBao" ToRole="ThongBaoTepDinhKem" />
+          <NavigationProperty Name="HocViens" Relationship="WebQLDiemModel.ThongBao_HocVien" FromRole="ThongBao" ToRole="HocVien" />
+        </EntityType>
+        <EntityType Name="ThongBao_NhanXet">
+          <Key>
+            <PropertyRef Name="MaNhanXet" />
+          </Key>
+          <Property Name="MaNhanXet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaThongBao" Type="Int32" />
+          <Property Name="NoiDung" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_ThongBao_NhanXet_TaiKhoan" FromRole="ThongBao_NhanXet" ToRole="TaiKhoan" />
+          <NavigationProperty Name="ThongBao" Relationship="WebQLDiemModel.FK_ThongBao_NhanXet_ThongBao" FromRole="ThongBao_NhanXet" ToRole="ThongBao" />
+        </EntityType>
+        <EntityType Name="ThongBaoTepDinhKem">
+          <Key>
+            <PropertyRef Name="MaTepDinhKem" />
+          </Key>
+          <Property Name="MaTepDinhKem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaThongBao" Type="Int32" />
+          <Property Name="DuongDan" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="NguoiTao" Type="Int32" />
+          <NavigationProperty Name="TaiKhoan" Relationship="WebQLDiemModel.FK_ThongBaoTepDinhKem_TaiKhoan" FromRole="ThongBaoTepDinhKem" ToRole="TaiKhoan" />
+          <NavigationProperty Name="ThongBao" Relationship="WebQLDiemModel.FK_ThongBaoTepDinhKem_ThongBao" FromRole="ThongBaoTepDinhKem" ToRole="ThongBao" />
+        </EntityType>
+        <Association Name="FK_BaiTap_ChuDe">
+          <End Type="WebQLDiemModel.ChuDe" Role="ChuDe" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.BaiTap" Role="BaiTap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuDe">
+              <PropertyRef Name="MaChuDe" />
+            </Principal>
+            <Dependent Role="BaiTap">
+              <PropertyRef Name="MaChuDe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTap_LopHoc">
+          <End Type="WebQLDiemModel.LopHoc" Role="LopHoc" Multiplicity="1" />
+          <End Type="WebQLDiemModel.BaiTap" Role="BaiTap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="BaiTap">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTap_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="1" />
+          <End Type="WebQLDiemModel.BaiTap" Role="BaiTap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="BaiTap">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTap_HocVien_BaiTap">
+          <End Type="WebQLDiemModel.BaiTap" Role="BaiTap" Multiplicity="1" />
+          <End Type="WebQLDiemModel.BaiTap_HocVien" Role="BaiTap_HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaiTap">
+              <PropertyRef Name="MaBaiTap" />
+            </Principal>
+            <Dependent Role="BaiTap_HocVien">
+              <PropertyRef Name="MaBaiTap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTapTepDinhKem_BaiTap">
+          <End Type="WebQLDiemModel.BaiTap" Role="BaiTap" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.BaiTapTepDinhKem" Role="BaiTapTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaiTap">
+              <PropertyRef Name="MaBaiTap" />
+            </Principal>
+            <Dependent Role="BaiTapTepDinhKem">
+              <PropertyRef Name="MaBaiTap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NhanXet_BaiTap">
+          <End Type="WebQLDiemModel.BaiTap" Role="BaiTap" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.BaiTap_NhanXet" Role="BaiTap_NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaiTap">
+              <PropertyRef Name="MaBaiTap" />
+            </Principal>
+            <Dependent Role="BaiTap_NhanXet">
+              <PropertyRef Name="MaBaiTap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTap_HocVien_HocVien">
+          <End Type="WebQLDiemModel.HocVien" Role="HocVien" Multiplicity="1" />
+          <End Type="WebQLDiemModel.BaiTap_HocVien" Role="BaiTap_HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Principal>
+            <Dependent Role="BaiTap_HocVien">
+              <PropertyRef Name="MaHocVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NhanXet_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.BaiTap_NhanXet" Role="BaiTap_NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="BaiTap_NhanXet">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiTapTepDinhKem_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.BaiTapTepDinhKem" Role="BaiTapTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="BaiTapTepDinhKem">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChuDe_LopHoc">
+          <End Type="WebQLDiemModel.LopHoc" Role="LopHoc" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.ChuDe" Role="ChuDe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="ChuDe">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChuDe_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.ChuDe" Role="ChuDe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="ChuDe">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu_ChuDe">
+          <End Type="WebQLDiemModel.ChuDe" Role="ChuDe" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.TaiLieu" Role="TaiLieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuDe">
+              <PropertyRef Name="MaChuDe" />
+            </Principal>
+            <Dependent Role="TaiLieu">
+              <PropertyRef Name="MaChuDe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GiangVien_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.GiangVien" Role="GiangVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="GiangVien">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HocVien_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.HocVien" Role="HocVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="HocVien">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LopHoc_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="1" />
+          <End Type="WebQLDiemModel.LopHoc" Role="LopHoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="LopHoc">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu_LopHoc">
+          <End Type="WebQLDiemModel.LopHoc" Role="LopHoc" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.TaiLieu" Role="TaiLieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="TaiLieu">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao_LopHoc">
+          <End Type="WebQLDiemModel.LopHoc" Role="LopHoc" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.ThongBao" Role="ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHoc">
+              <PropertyRef Name="MaLopHoc" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="MaLopHoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiKhoan_ThongBao_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.TaiKhoan_ThongBao" Role="TaiKhoan_ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="TaiKhoan_ThongBao">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="1" />
+          <End Type="WebQLDiemModel.TaiLieu" Role="TaiLieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="TaiLieu">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu_NhanXet_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.TaiLieu_NhanXet" Role="TaiLieu_NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="TaiLieu_NhanXet">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieuTepDinhKem_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.TaiLieuTepDinhKem" Role="TaiLieuTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="TaiLieuTepDinhKem">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.ThongBao" Role="ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao_NhanXet_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.ThongBao_NhanXet" Role="ThongBao_NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="ThongBao_NhanXet">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBaoTepDinhKem_TaiKhoan">
+          <End Type="WebQLDiemModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.ThongBaoTepDinhKem" Role="ThongBaoTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaKhoan" />
+            </Principal>
+            <Dependent Role="ThongBaoTepDinhKem">
+              <PropertyRef Name="NguoiTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieu_NhanXet_TaiLieu">
+          <End Type="WebQLDiemModel.TaiLieu" Role="TaiLieu" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.TaiLieu_NhanXet" Role="TaiLieu_NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiLieu">
+              <PropertyRef Name="MaTaiLieu" />
+            </Principal>
+            <Dependent Role="TaiLieu_NhanXet">
+              <PropertyRef Name="MaTaiLieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiLieuTepDinhKem_TaiLieu">
+          <End Type="WebQLDiemModel.TaiLieu" Role="TaiLieu" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.TaiLieuTepDinhKem" Role="TaiLieuTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiLieu">
+              <PropertyRef Name="MaTaiLieu" />
+            </Principal>
+            <Dependent Role="TaiLieuTepDinhKem">
+              <PropertyRef Name="MaTaiLieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao_NhanXet_ThongBao">
+          <End Type="WebQLDiemModel.ThongBao" Role="ThongBao" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.ThongBao_NhanXet" Role="ThongBao_NhanXet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThongBao">
+              <PropertyRef Name="MaThongBao" />
+            </Principal>
+            <Dependent Role="ThongBao_NhanXet">
+              <PropertyRef Name="MaThongBao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBaoTepDinhKem_ThongBao">
+          <End Type="WebQLDiemModel.ThongBao" Role="ThongBao" Multiplicity="0..1" />
+          <End Type="WebQLDiemModel.ThongBaoTepDinhKem" Role="ThongBaoTepDinhKem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThongBao">
+              <PropertyRef Name="MaThongBao" />
+            </Principal>
+            <Dependent Role="ThongBaoTepDinhKem">
+              <PropertyRef Name="MaThongBao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LopHoc_GiangVien">
+          <End Type="WebQLDiemModel.GiangVien" Role="GiangVien" Multiplicity="*" />
+          <End Type="WebQLDiemModel.LopHoc" Role="LopHoc" Multiplicity="*" />
+        </Association>
+        <Association Name="LopHoc_HocVien">
+          <End Type="WebQLDiemModel.HocVien" Role="HocVien" Multiplicity="*" />
+          <End Type="WebQLDiemModel.LopHoc" Role="LopHoc" Multiplicity="*" />
+        </Association>
+        <Association Name="TaiLieu_HocVien">
+          <End Type="WebQLDiemModel.HocVien" Role="HocVien" Multiplicity="*" />
+          <End Type="WebQLDiemModel.TaiLieu" Role="TaiLieu" Multiplicity="*" />
+        </Association>
+        <Association Name="ThongBao_HocVien">
+          <End Type="WebQLDiemModel.HocVien" Role="HocVien" Multiplicity="*" />
+          <End Type="WebQLDiemModel.ThongBao" Role="ThongBao" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WebQLDiemModelStoreContainer" CdmEntityContainer="WebQLDiemEntities">
+          <EntitySetMapping Name="BaiTaps">
+            <EntityTypeMapping TypeName="WebQLDiemModel.BaiTap">
+              <MappingFragment StoreEntitySet="BaiTap">
+                <ScalarProperty Name="ThangDiemChuyenCan" ColumnName="ThangDiemChuyenCan" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="MaChuDe" ColumnName="MaChuDe" />
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
+                <ScalarProperty Name="NgayBatDau" ColumnName="NgayBatDau" />
+                <ScalarProperty Name="MaLopHoc" ColumnName="MaLopHoc" />
+                <ScalarProperty Name="ThangDiem" ColumnName="ThangDiem" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+                <ScalarProperty Name="TenBaiTap" ColumnName="TenBaiTap" />
+                <ScalarProperty Name="MaBaiTap" ColumnName="MaBaiTap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaiTap_HocVien">
+            <EntityTypeMapping TypeName="WebQLDiemModel.BaiTap_HocVien">
+              <MappingFragment StoreEntitySet="BaiTap-HocVien">
+                <ScalarProperty Name="NoiDungGuiBai" ColumnName="NoiDungGuiBai" />
+                <ScalarProperty Name="TepDinhKem" ColumnName="TepDinhKem" />
+                <ScalarProperty Name="NhanXetGiangVien" ColumnName="NhanXetGiangVien" />
+                <ScalarProperty Name="DiemChuyenCan" ColumnName="DiemChuyenCan" />
+                <ScalarProperty Name="DiemHocTap" ColumnName="DiemHocTap" />
+                <ScalarProperty Name="NgayChamDiem" ColumnName="NgayChamDiem" />
+                <ScalarProperty Name="NgayNop" ColumnName="NgayNop" />
+                <ScalarProperty Name="NgayGiao" ColumnName="NgayGiao" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="MaHocVien" ColumnName="MaHocVien" />
+                <ScalarProperty Name="MaBaiTap" ColumnName="MaBaiTap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaiTap_NhanXet">
+            <EntityTypeMapping TypeName="WebQLDiemModel.BaiTap_NhanXet">
+              <MappingFragment StoreEntitySet="BaiTap-NhanXet">
+                <ScalarProperty Name="MaBaiTap" ColumnName="MaBaiTap" />
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="MaNhanXet" ColumnName="MaNhanXet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaiTapTepDinhKems">
+            <EntityTypeMapping TypeName="WebQLDiemModel.BaiTapTepDinhKem">
+              <MappingFragment StoreEntitySet="BaiTapTepDinhKem">
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="DuongDan" ColumnName="DuongDan" />
+                <ScalarProperty Name="MaBaiTap" ColumnName="MaBaiTap" />
+                <ScalarProperty Name="MaTepDinhKem" ColumnName="MaTepDinhKem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChuDes">
+            <EntityTypeMapping TypeName="WebQLDiemModel.ChuDe">
+              <MappingFragment StoreEntitySet="ChuDe">
+                <ScalarProperty Name="MaLopHoc" ColumnName="MaLopHoc" />
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="TenChuDe" ColumnName="TenChuDe" />
+                <ScalarProperty Name="MaChuDe" ColumnName="MaChuDe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GiangViens">
+            <EntityTypeMapping TypeName="WebQLDiemModel.GiangVien">
+              <MappingFragment StoreEntitySet="GiangVien">
+                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="SoDienThoai" ColumnName="SoDienThoai" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TenGiangVien" ColumnName="TenGiangVien" />
+                <ScalarProperty Name="MaGiangVien" ColumnName="MaGiangVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HocViens">
+            <EntityTypeMapping TypeName="WebQLDiemModel.HocVien">
+              <MappingFragment StoreEntitySet="HocVien">
+                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="SoDienThoai" ColumnName="SoDienThoai" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TenHocVien" ColumnName="TenHocVien" />
+                <ScalarProperty Name="MaHocVien" ColumnName="MaHocVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LopHocs">
+            <EntityTypeMapping TypeName="WebQLDiemModel.LopHoc">
+              <MappingFragment StoreEntitySet="LopHoc">
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="ChuDe" ColumnName="ChuDe" />
+                <ScalarProperty Name="Phong" ColumnName="Phong" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+                <ScalarProperty Name="TenLopHoc" ColumnName="TenLopHoc" />
+                <ScalarProperty Name="MaLopHoc" ColumnName="MaLopHoc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="WebQLDiemModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiKhoans">
+            <EntityTypeMapping TypeName="WebQLDiemModel.TaiKhoan">
+              <MappingFragment StoreEntitySet="TaiKhoan">
+                <ScalarProperty Name="HinhDaiDien" ColumnName="HinhDaiDien" />
+                <ScalarProperty Name="LoaiTaiKhoan" ColumnName="LoaiTaiKhoan" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+                <ScalarProperty Name="MaTaKhoan" ColumnName="MaTaKhoan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiKhoan_ThongBao">
+            <EntityTypeMapping TypeName="WebQLDiemModel.TaiKhoan_ThongBao">
+              <MappingFragment StoreEntitySet="TaiKhoan-ThongBao">
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
+                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+                <ScalarProperty Name="MaThongBao" ColumnName="MaThongBao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiLieux">
+            <EntityTypeMapping TypeName="WebQLDiemModel.TaiLieu">
+              <MappingFragment StoreEntitySet="TaiLieu">
+                <ScalarProperty Name="MaChuDe" ColumnName="MaChuDe" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+                <ScalarProperty Name="TenTaiLieu" ColumnName="TenTaiLieu" />
+                <ScalarProperty Name="MaLopHoc" ColumnName="MaLopHoc" />
+                <ScalarProperty Name="MaTaiLieu" ColumnName="MaTaiLieu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiLieu_NhanXet">
+            <EntityTypeMapping TypeName="WebQLDiemModel.TaiLieu_NhanXet">
+              <MappingFragment StoreEntitySet="TaiLieu-NhanXet">
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="MaTaiLieu" ColumnName="MaTaiLieu" />
+                <ScalarProperty Name="MaNhanXet" ColumnName="MaNhanXet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiLieuTepDinhKems">
+            <EntityTypeMapping TypeName="WebQLDiemModel.TaiLieuTepDinhKem">
+              <MappingFragment StoreEntitySet="TaiLieuTepDinhKem">
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="DuongDan" ColumnName="DuongDan" />
+                <ScalarProperty Name="MaTaiLieu" ColumnName="MaTaiLieu" />
+                <ScalarProperty Name="MaTepDinhKem" ColumnName="MaTepDinhKem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThongBaos">
+            <EntityTypeMapping TypeName="WebQLDiemModel.ThongBao">
+              <MappingFragment StoreEntitySet="ThongBao">
+                <ScalarProperty Name="MaLopHoc" ColumnName="MaLopHoc" />
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="MaThongBao" ColumnName="MaThongBao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThongBao_NhanXet">
+            <EntityTypeMapping TypeName="WebQLDiemModel.ThongBao_NhanXet">
+              <MappingFragment StoreEntitySet="ThongBao-NhanXet">
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="MaThongBao" ColumnName="MaThongBao" />
+                <ScalarProperty Name="MaNhanXet" ColumnName="MaNhanXet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThongBaoTepDinhKems">
+            <EntityTypeMapping TypeName="WebQLDiemModel.ThongBaoTepDinhKem">
+              <MappingFragment StoreEntitySet="ThongBaoTepDinhKem">
+                <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="DuongDan" ColumnName="DuongDan" />
+                <ScalarProperty Name="MaThongBao" ColumnName="MaThongBao" />
+                <ScalarProperty Name="MaTepDinhKem" ColumnName="MaTepDinhKem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="LopHoc_GiangVien" TypeName="WebQLDiemModel.LopHoc_GiangVien" StoreEntitySet="LopHoc-GiangVien">
+            <EndProperty Name="LopHoc">
+              <ScalarProperty Name="MaLopHoc" ColumnName="MaLopHoc" />
+            </EndProperty>
+            <EndProperty Name="GiangVien">
+              <ScalarProperty Name="MaGiangVien" ColumnName="MaGiangVien" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="LopHoc_HocVien" TypeName="WebQLDiemModel.LopHoc_HocVien" StoreEntitySet="LopHoc-HocVien">
+            <EndProperty Name="LopHoc">
+              <ScalarProperty Name="MaLopHoc" ColumnName="MaLopHoc" />
+            </EndProperty>
+            <EndProperty Name="HocVien">
+              <ScalarProperty Name="MaHocVien" ColumnName="MaHocVien" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TaiLieu_HocVien" TypeName="WebQLDiemModel.TaiLieu_HocVien" StoreEntitySet="TaiLieu-HocVien">
+            <EndProperty Name="TaiLieu">
+              <ScalarProperty Name="MaTaiLieu" ColumnName="MaTaiLieu" />
+            </EndProperty>
+            <EndProperty Name="HocVien">
+              <ScalarProperty Name="MaHocVien" ColumnName="MaHocVien" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ThongBao_HocVien" TypeName="WebQLDiemModel.ThongBao_HocVien" StoreEntitySet="ThongBao-HocVien">
+            <EndProperty Name="ThongBao">
+              <ScalarProperty Name="MaThongBao" ColumnName="MaThongBao" />
+            </EndProperty>
+            <EndProperty Name="HocVien">
+              <ScalarProperty Name="MaHocVien" ColumnName="MaHocVien" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

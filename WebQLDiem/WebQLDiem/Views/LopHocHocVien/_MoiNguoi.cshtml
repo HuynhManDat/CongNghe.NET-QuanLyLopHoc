@@ -1,0 +1,64 @@
+﻿@model LopHoc
+@{
+    Layout = null;
+}
+
+<div class="box box-warning box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-user margin-r-5"></i>Giáo viên</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered table-striped" style="width:100%">
+            <tbody>
+                @foreach (var item in Model.GiangViens.ToList())
+                {
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.TaiKhoan.HinhDaiDien))
+                            {
+                                <img src="@item.TaiKhoan.HinhDaiDien" class="img-circle" style="width:35px; height:35px;" alt="User Image">
+                            }
+                            else
+                            {
+                                <img src="/Content/dist/img/avatar5.png" style="width:35px; height:35px;" class="img-circle" alt="User Image">
+                            }
+
+                            @item.TenGiangVien
+                        </td>
+                        <td>@item.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div><!-- /.box-body -->
+</div>
+<hr>
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-group margin-r-5"></i>Học viên</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered table-striped" style="width:100%">
+            <tbody>
+                @foreach (var item in Model.HocViens.ToList())
+                {
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.TaiKhoan.HinhDaiDien))
+                            {
+                                <img src="@item.TaiKhoan.HinhDaiDien" class="img-circle" style="width:35px; height:35px;" alt="User Image">
+                            }
+                            else
+                            {
+                                <img src="/Content/dist/img/avatar5.png" style="width:35px; height:35px;" class="img-circle" alt="User Image">
+                            }
+
+                            @item.TenHocVien
+                        </td>
+                        <td>@item.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div><!-- /.box-body -->
+</div>

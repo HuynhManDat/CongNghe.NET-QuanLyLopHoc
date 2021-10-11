@@ -1,0 +1,78 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WebQLDiem.Attributes;
+using WebQLDiem.Enums;
+using WebQLDiem.Models;
+using WebQLDiem.Models.Meta;
+
+namespace WebQLDiem.Controllers
+{
+    [AdminAuthorize]
+    public class DiemController : BaseController
+    {
+        // GET: Diem
+        public ActionResult Index()
+        {
+            var list = Db.BaiTap_HocVien.Where(x=>x.TrangThai >= (int)TrangThaiBaiTap.NopBaiTap).ToList();
+            return View(list);
+        }
+
+        public ActionResult Edit(int mabt, int mahv)
+        {
+            try
+            {
+                var model = Db.BaiTap_HocVien.FirstOrDefault(x => x.MaBaiTap == mabt && x.MaHocVien == mahv);
+                return View(model);
+            }
+            catch
+            {
+                return RedirectToAction("index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Edit(BaiTap_HocVien model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var obj = Db.BaiTap_HocVien.FirstOrDefault(x => x.MaBaiTap == model.MaBaiTap && x.MaHocVien == model.MaHocVien);
+
+                    obj.NgayChamDiem = DateTime.Now;
+                    obj.DiemHocTap = model.DiemHocTap;
+                    obj.DiemChuyenCan = model.DiemChuyenCan;
+                    obj.NhanXetGiangVien = model.NhanXetGiangVien;
+                    obj.TrangThai = (int)TrangThaiBaiTap.ChamDiem;
+
+                    Db.BaiTap_HocVien.Attach(obj);
+                    Db.Entry(obj).State = EntityState.Modified;
+                    Db.SaveChanges();
+
+                    var baitap = Db.BaiTaps.FirstOrDefault(x => x.MaBaiTap == model.MaBaiTap);
+                    baitap.TrangThai = (int)TrangThaiBaiTap.ChamDiem;
+                    Db.BaiTaps.Attach(baitap);
+                    Db.Entry(obj).State = EntityState.Modified;
+                    Db.SaveChanges();
+
+                    SendMailHocVien(obj.HocVien.MaTaiKhoan.Value, "Bài tập [" + obj.BaiTap.TenBaiTap +"] đã được chấm điểm" );
+                    SendThongBaoTaiKhoan(obj.HocVien.MaTaiKhoan.Value, "Bài tập [" + obj.BaiTap.TenBaiTap + "] đã được chấm điểm", "Bài tập [" + obj.BaiTap.TenBaiTap + "] đã được chấm điểm");
+                }
+                catch
+                {
+                    TempData["mess"] = "Không thể sửa dữ liệu";
+                }
+
+                return RedirectToAction("index");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+    }
+}

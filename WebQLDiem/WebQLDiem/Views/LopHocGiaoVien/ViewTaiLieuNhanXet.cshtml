@@ -1,0 +1,122 @@
+﻿@model TaiLieu
+@{
+    ViewBag.Title = Model.TenTaiLieu;
+    Layout = null;
+}
+<style>
+    .fix-content .form-control{
+        background: #fff;
+        border:none;
+    }
+    .fix-content .form-control.fixxx {
+            border: 1px solid #808080;
+        }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="row fix-content">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <!-- form start -->
+            <div class="form-horizontal">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.MaLopHoc)
+                @Html.HiddenFor(x => x.MaTaiLieu)
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                            <div class="direct-chat-messages">
+                                @if (Model.TaiLieu_NhanXet != null)
+                                {
+                                    foreach (var item in Model.TaiLieu_NhanXet.ToList())
+                                    {
+                                        if (item.TaiKhoan.LoaiTaiKhoan == (int)UserType.HocVien)
+                                        {
+                                            <div class="direct-chat-msg">
+                                                <div class="direct-chat-info clearfix">
+                                                    <span class="direct-chat-name pull-left">@item.TaiKhoan.TenDangNhap</span>
+                                                    <span class="direct-chat-timestamp pull-right">@item.NgayTao</span>
+                                                </div>
+                                                @if (!string.IsNullOrEmpty(item.TaiKhoan.HinhDaiDien))
+                                                {
+                                                    <img src="@item.TaiKhoan.HinhDaiDien" class="direct-chat-img" style="width:35px; height:35px;" alt="User Image">
+                                                }
+                                                else
+                                                {
+                                                    <img src="/Content/dist/img/avatar04.png" style="width:35px; height:35px;" class="direct-chat-img" alt="User Image">
+                                                }
+                                                <div class="direct-chat-text">
+                                                    @item.NoiDung
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="direct-chat-msg">
+                                                <div class="direct-chat-info clearfix">
+                                                    <span class="direct-chat-name pull-left">@item.TaiKhoan.TenDangNhap</span>
+                                                    <span class="direct-chat-timestamp pull-right">@item.NgayTao</span>
+                                                </div>
+                                                @if (!string.IsNullOrEmpty(item.TaiKhoan.HinhDaiDien))
+                                                {
+                                                    <img src="@item.TaiKhoan.HinhDaiDien" class="direct-chat-img" style="width:35px; height:35px;" alt="User Image">
+                                                }
+                                                else
+                                                {
+                                                    <img src="/Content/dist/img/avatar5.png" style="width:35px; height:35px;" class="direct-chat-img" alt="User Image">
+                                                }
+                                                <div class="direct-chat-text">
+                                                    @item.NoiDung
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                                <form action="@Url.Action("TraoDoiTaiLieu")" method="post" id="from-chat">
+                                    <div class="input-group">
+                                        @Html.HiddenFor(x => x.MaTaiLieu)
+                                        <input type="text" name="NoiDung" required placeholder="Nội dung trao đổi ..." class="form-control fixxx">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-warning btn-flat">Send</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#from-chat").submit(function (event) {
+        event.preventDefault();
+        var actionurl = event.currentTarget.action;
+        if ($(this).valid()) {
+            $.ajax({
+                url: actionurl,
+                type: 'post',
+                data: $("#from-chat").serialize(),
+                success: function (data) {
+                    if (data.IsError == false) {
+                        xemtailieunhanxet(@Model.MaTaiLieu);
+                    }
+                    else {
+                        alert(data.Messger);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+        return false;
+    });
+</script>

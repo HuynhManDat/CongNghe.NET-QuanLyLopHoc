@@ -1,0 +1,302 @@
+﻿@{
+    ViewBag.Title = "CMS _ DNA";
+    ViewBag.Controller = "Quản trị";
+    ViewBag.General = "active";
+    ViewBag.Administrator = "active";
+    ViewBag.Id = "view-null";
+
+    var db = new WebQLDiemEntities();
+    var MaTaiKhoan = 0;
+    HttpCookie id = Request.Cookies.Get("Id");
+    if (id != null)
+    {
+        MaTaiKhoan = int.Parse(id.Value);
+    }
+    var taikhoan = db.TaiKhoans.FirstOrDefault(x => x.MaTaKhoan == MaTaiKhoan);
+}
+
+<div class="row">
+    <div class="col col-lg-12">
+        <h2>Chào mừng đến với hệ thống</h2>
+    </div>
+</div>
+
+@if (taikhoan.LoaiTaiKhoan == (int)UserType.Admin)
+{
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="glyphicon glyphicon-user"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Tài khoản</span>
+                    <span class="info-box-number">@db.TaiKhoans.Count()</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-home"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Lớp học</span>
+                    <span class="info-box-number">@db.LopHocs.Count()</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-user"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Giảng viên</span>
+                    <span class="info-box-number">@db.GiangViens.Count()</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Học viên</span>
+                    <span class="info-box-number">@db.HocViens.Count()</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-solid bg-green-gradient">
+                <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Lịch</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <!-- button with a dropdown -->
+                        <button class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <!--The calendar -->
+                    <div id="calendar" style="width: 100%"><div class="datepicker datepicker-inline"><div class="datepicker-days" style="display: block;"><table class="table table-condensed"><thead><tr><th class="prev" style="visibility: visible;">«</th><th colspan="5" class="datepicker-switch">April 2021</th><th class="next" style="visibility: visible;">»</th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td class="old day">28</td><td class="old day">29</td><td class="old day">30</td><td class="old day">31</td><td class="day">1</td><td class="day">2</td><td class="day">3</td></tr><tr><td class="day">4</td><td class="day">5</td><td class="day">6</td><td class="day">7</td><td class="day">8</td><td class="day">9</td><td class="day">10</td></tr><tr><td class="day">11</td><td class="day">12</td><td class="day">13</td><td class="day">14</td><td class="day">15</td><td class="day">16</td><td class="day">17</td></tr><tr><td class="day">18</td><td class="day">19</td><td class="day">20</td><td class="day">21</td><td class="day">22</td><td class="day">23</td><td class="day">24</td></tr><tr><td class="day">25</td><td class="day">26</td><td class="day">27</td><td class="day">28</td><td class="day">29</td><td class="day">30</td><td class="new day">1</td></tr><tr><td class="new day">2</td><td class="new day">3</td><td class="new day">4</td><td class="new day">5</td><td class="new day">6</td><td class="new day">7</td><td class="new day">8</td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-months" style="display: none;"><table class="table table-condensed"><thead><tr><th class="prev" style="visibility: visible;">«</th><th colspan="5" class="datepicker-switch">2021</th><th class="next" style="visibility: visible;">»</th></tr></thead><tbody><tr><td colspan="7"><span class="month">Jan</span><span class="month">Feb</span><span class="month">Mar</span><span class="month">Apr</span><span class="month">May</span><span class="month">Jun</span><span class="month">Jul</span><span class="month">Aug</span><span class="month">Sep</span><span class="month">Oct</span><span class="month">Nov</span><span class="month">Dec</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-years" style="display: none;"><table class="table table-condensed"><thead><tr><th class="prev" style="visibility: visible;">«</th><th colspan="5" class="datepicker-switch">2020-2029</th><th class="next" style="visibility: visible;">»</th></tr></thead><tbody><tr><td colspan="7"><span class="year old">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year new">2030</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div></div></div>
+                </div><!-- /.box-body -->
+            </div>
+        </div><!-- /.col -->
+        <div class="col-md-4">
+            <p class="text-center">
+                <strong>Thống kê</strong>
+            </p>
+            <div class="progress-group">
+                <span class="progress-text">Bài tập đã giao</span>
+                <span class="progress-number"><b>@db.BaiTaps.Count(x => x.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap)</b>/@db.BaiTaps.Count()</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-aqua" style="width: @Html.Raw(((double)db.BaiTaps.Count(x => x.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap) / db.BaiTaps.Count()) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text">Tài liệu đã gửi</span>
+                <span class="progress-number"><b>@db.TaiLieux.Count(x => x.TrangThai == (int)TrangThaiTaiLieu.GiaoTaiLieu)</b>/@db.TaiLieux.Count()</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-red" style="width: @Html.Raw(((double)db.TaiLieux.Count(x => x.TrangThai == (int)TrangThaiTaiLieu.GiaoTaiLieu) / db.TaiLieux.Count()) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text">Bài tập học viên đã nộp</span>
+                <span class="progress-number"><b>@db.BaiTap_HocVien.Count(x => x.TrangThai >= (int)TrangThaiBaiTap.NopBaiTap)</b>/@db.BaiTap_HocVien.Count()</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-green" style="width: @Html.Raw(((double)db.BaiTap_HocVien.Count(x => x.TrangThai >= (int)TrangThaiBaiTap.NopBaiTap) / db.BaiTap_HocVien.Count()) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text">Bài tập học viên đã chấm</span>
+                <span class="progress-number"><b>@db.BaiTap_HocVien.Count(x => x.TrangThai == (int)TrangThaiBaiTap.ChamDiem)</b>/@db.BaiTap_HocVien.Count()</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-yellow" style="width:  @Html.Raw(((double)db.BaiTap_HocVien.Count(x => x.TrangThai == (int)TrangThaiBaiTap.ChamDiem) / db.BaiTap_HocVien.Count()) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+        </div><!-- /.col -->
+    </div>
+}
+
+@if (taikhoan.LoaiTaiKhoan == (int)UserType.GiaoVien)
+{
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-bell-o"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Thông báo</span>
+                    <span class="info-box-number">@db.TaiKhoan_ThongBao.Count(x => x.MaTaiKhoan == MaTaiKhoan)</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-home"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Lớp học</span>
+                    <span class="info-box-number">@db.LopHocs.Count(x => x.NguoiTao == MaTaiKhoan || x.GiangViens.Any(y => y.MaTaiKhoan == MaTaiKhoan))</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-file-excel-o"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Bài tập</span>
+                    <span class="info-box-number">@db.BaiTaps.Count(x => x.NguoiTao == MaTaiKhoan)</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-file"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Tài liệu</span>
+                    <span class="info-box-number">@db.TaiLieux.Count(x => x.NguoiTao == MaTaiKhoan)</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-solid bg-green-gradient">
+                <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Lịch</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <!-- button with a dropdown -->
+                        <button class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <!--The calendar -->
+                    <div id="calendar" style="width: 100%"><div class="datepicker datepicker-inline"><div class="datepicker-days" style="display: block;"><table class="table table-condensed"><thead><tr><th class="prev" style="visibility: visible;">«</th><th colspan="5" class="datepicker-switch">April 2021</th><th class="next" style="visibility: visible;">»</th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td class="old day">28</td><td class="old day">29</td><td class="old day">30</td><td class="old day">31</td><td class="day">1</td><td class="day">2</td><td class="day">3</td></tr><tr><td class="day">4</td><td class="day">5</td><td class="day">6</td><td class="day">7</td><td class="day">8</td><td class="day">9</td><td class="day">10</td></tr><tr><td class="day">11</td><td class="day">12</td><td class="day">13</td><td class="day">14</td><td class="day">15</td><td class="day">16</td><td class="day">17</td></tr><tr><td class="day">18</td><td class="day">19</td><td class="day">20</td><td class="day">21</td><td class="day">22</td><td class="day">23</td><td class="day">24</td></tr><tr><td class="day">25</td><td class="day">26</td><td class="day">27</td><td class="day">28</td><td class="day">29</td><td class="day">30</td><td class="new day">1</td></tr><tr><td class="new day">2</td><td class="new day">3</td><td class="new day">4</td><td class="new day">5</td><td class="new day">6</td><td class="new day">7</td><td class="new day">8</td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-months" style="display: none;"><table class="table table-condensed"><thead><tr><th class="prev" style="visibility: visible;">«</th><th colspan="5" class="datepicker-switch">2021</th><th class="next" style="visibility: visible;">»</th></tr></thead><tbody><tr><td colspan="7"><span class="month">Jan</span><span class="month">Feb</span><span class="month">Mar</span><span class="month">Apr</span><span class="month">May</span><span class="month">Jun</span><span class="month">Jul</span><span class="month">Aug</span><span class="month">Sep</span><span class="month">Oct</span><span class="month">Nov</span><span class="month">Dec</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-years" style="display: none;"><table class="table table-condensed"><thead><tr><th class="prev" style="visibility: visible;">«</th><th colspan="5" class="datepicker-switch">2020-2029</th><th class="next" style="visibility: visible;">»</th></tr></thead><tbody><tr><td colspan="7"><span class="year old">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year new">2030</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div></div></div>
+                </div><!-- /.box-body -->
+            </div>
+        </div><!-- /.col -->
+        <div class="col-md-4">
+            <p class="text-center">
+                <strong>Thống kê</strong>
+            </p>
+            <div class="progress-group">
+                <span class="progress-text">Bài tập đã giao</span>
+                <span class="progress-number"><b>@db.BaiTaps.Count(x => x.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && x.NguoiTao == MaTaiKhoan)</b>/@db.BaiTaps.Count(x=> x.NguoiTao == MaTaiKhoan)</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-aqua" style="width: @Html.Raw(((double)db.BaiTaps.Count(x => x.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap && x.NguoiTao == MaTaiKhoan) / db.BaiTaps.Count(x=>x.NguoiTao == MaTaiKhoan)) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text">Tài liệu đã gửi</span>
+                <span class="progress-number"><b>@db.TaiLieux.Count(x => x.TrangThai == (int)TrangThaiTaiLieu.GiaoTaiLieu && x.NguoiTao == MaTaiKhoan)</b>/@db.TaiLieux.Count(x=> x.NguoiTao == MaTaiKhoan)</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-red" style="width: @Html.Raw(((double)db.TaiLieux.Count(x => x.TrangThai == (int)TrangThaiTaiLieu.GiaoTaiLieu && x.NguoiTao == MaTaiKhoan) / db.TaiLieux.Count(x=>x.NguoiTao == MaTaiKhoan)) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text">Bài tập học viên đã nộp</span>
+                <span class="progress-number"><b>@db.BaiTap_HocVien.Count(x => x.TrangThai >= (int)TrangThaiBaiTap.NopBaiTap && x.BaiTap.NguoiTao == MaTaiKhoan)</b>/@db.BaiTap_HocVien.Count(x=> x.BaiTap.NguoiTao == MaTaiKhoan)</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-green" style="width: @Html.Raw(((double)db.BaiTap_HocVien.Count(x => x.TrangThai >= (int)TrangThaiBaiTap.NopBaiTap && x.BaiTap.NguoiTao == MaTaiKhoan) / db.BaiTap_HocVien.Count(x=> x.BaiTap.NguoiTao == MaTaiKhoan)) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text">Bài tập học viên đã chấm</span>
+                <span class="progress-number"><b>@db.BaiTap_HocVien.Count(x => x.TrangThai == (int)TrangThaiBaiTap.ChamDiem && x.BaiTap.NguoiTao == MaTaiKhoan)</b>/@db.BaiTap_HocVien.Count(x=> x.BaiTap.NguoiTao == MaTaiKhoan)</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-yellow" style="width:  @Html.Raw(((double)db.BaiTap_HocVien.Count(x => x.TrangThai == (int)TrangThaiBaiTap.ChamDiem && x.BaiTap.NguoiTao == MaTaiKhoan) / db.BaiTap_HocVien.Count(x=> x.BaiTap.NguoiTao == MaTaiKhoan)) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+        </div><!-- /.col -->
+    </div>
+}
+
+@if (taikhoan.LoaiTaiKhoan == (int)UserType.HocVien)
+{
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-bell-o"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Thông báo</span>
+                    <span class="info-box-number">@db.TaiKhoan_ThongBao.Count(x => x.MaTaiKhoan == MaTaiKhoan)</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-home"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Lớp học</span>
+                    <span class="info-box-number">@db.LopHocs.Count(x => x.HocViens.Any(y => y.MaTaiKhoan == MaTaiKhoan))</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-file-excel-o"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Bài tập</span>
+                    <span class="info-box-number">@db.BaiTaps.Count(x => x.BaiTap_HocVien.Any(y => y.HocVien.MaTaiKhoan == MaTaiKhoan))</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-file"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Tài liệu</span>
+                    <span class="info-box-number">@db.TaiLieux.Count(x => x.HocViens.Any(y => y.MaTaiKhoan == MaTaiKhoan))</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-solid bg-green-gradient">
+                <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Lịch</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <!-- button with a dropdown -->
+                        <button class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <!--The calendar -->
+                    <div id="calendar" style="width: 100%"><div class="datepicker datepicker-inline"><div class="datepicker-days" style="display: block;"><table class="table table-condensed"><thead><tr><th class="prev" style="visibility: visible;">«</th><th colspan="5" class="datepicker-switch">April 2021</th><th class="next" style="visibility: visible;">»</th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td class="old day">28</td><td class="old day">29</td><td class="old day">30</td><td class="old day">31</td><td class="day">1</td><td class="day">2</td><td class="day">3</td></tr><tr><td class="day">4</td><td class="day">5</td><td class="day">6</td><td class="day">7</td><td class="day">8</td><td class="day">9</td><td class="day">10</td></tr><tr><td class="day">11</td><td class="day">12</td><td class="day">13</td><td class="day">14</td><td class="day">15</td><td class="day">16</td><td class="day">17</td></tr><tr><td class="day">18</td><td class="day">19</td><td class="day">20</td><td class="day">21</td><td class="day">22</td><td class="day">23</td><td class="day">24</td></tr><tr><td class="day">25</td><td class="day">26</td><td class="day">27</td><td class="day">28</td><td class="day">29</td><td class="day">30</td><td class="new day">1</td></tr><tr><td class="new day">2</td><td class="new day">3</td><td class="new day">4</td><td class="new day">5</td><td class="new day">6</td><td class="new day">7</td><td class="new day">8</td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-months" style="display: none;"><table class="table table-condensed"><thead><tr><th class="prev" style="visibility: visible;">«</th><th colspan="5" class="datepicker-switch">2021</th><th class="next" style="visibility: visible;">»</th></tr></thead><tbody><tr><td colspan="7"><span class="month">Jan</span><span class="month">Feb</span><span class="month">Mar</span><span class="month">Apr</span><span class="month">May</span><span class="month">Jun</span><span class="month">Jul</span><span class="month">Aug</span><span class="month">Sep</span><span class="month">Oct</span><span class="month">Nov</span><span class="month">Dec</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-years" style="display: none;"><table class="table table-condensed"><thead><tr><th class="prev" style="visibility: visible;">«</th><th colspan="5" class="datepicker-switch">2020-2029</th><th class="next" style="visibility: visible;">»</th></tr></thead><tbody><tr><td colspan="7"><span class="year old">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year new">2030</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div></div></div>
+                </div><!-- /.box-body -->
+            </div>
+        </div><!-- /.col -->
+        <div class="col-md-4">
+            <p class="text-center">
+                <strong>Thống kê</strong>
+            </p>
+            <div class="progress-group">
+                <span class="progress-text">Bài tập học viên đã nộp</span>
+                <span class="progress-number"><b>@db.BaiTap_HocVien.Count(x => x.TrangThai >= (int)TrangThaiBaiTap.NopBaiTap && x.HocVien.MaTaiKhoan == MaTaiKhoan)</b>/@db.BaiTap_HocVien.Count(x => x.HocVien.MaTaiKhoan == MaTaiKhoan)</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-green" style="width: @Html.Raw(((double)db.BaiTap_HocVien.Count(x => x.TrangThai >= (int)TrangThaiBaiTap.NopBaiTap && x.HocVien.MaTaiKhoan == MaTaiKhoan) / db.BaiTap_HocVien.Count(x=> x.HocVien.MaTaiKhoan == MaTaiKhoan)) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text">Bài tập học viên đã chấm</span>
+                <span class="progress-number"><b>@db.BaiTap_HocVien.Count(x => x.TrangThai == (int)TrangThaiBaiTap.ChamDiem && x.HocVien.MaTaiKhoan == MaTaiKhoan)</b>/@db.BaiTap_HocVien.Count(x => x.HocVien.MaTaiKhoan == MaTaiKhoan)</span>
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-yellow" style="width:  @Html.Raw(((double)db.BaiTap_HocVien.Count(x => x.TrangThai == (int)TrangThaiBaiTap.ChamDiem && x.HocVien.MaTaiKhoan == MaTaiKhoan) / db.BaiTap_HocVien.Count(x=> x.HocVien.MaTaiKhoan == MaTaiKhoan)) * 100)%"></div>
+                </div>
+            </div><!-- /.progress-group -->
+        </div><!-- /.col -->
+    </div>
+}

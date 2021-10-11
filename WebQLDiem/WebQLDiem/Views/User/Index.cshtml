@@ -1,0 +1,57 @@
+﻿@model List<TaiKhoan>
+@{
+    ViewBag.Title = "Danh sách tài khoản";
+    ViewBag.Controller = "Tài khoản";
+    ViewBag.General = "active";
+    ViewBag.User = "active";
+    ViewBag.Id = "view-null";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+                <a href="/user/add" class="btn btn-success pull-right">Thêm</a>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Tài khoản</th>
+                            <th>Loại tài khoản</th>
+                            <th class="w100">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.TenDangNhap</td>
+                                <td>
+                                    @if(item.LoaiTaiKhoan == (int)UserType.Admin)
+                                    {
+                                        @Html.Raw("Admin")
+                                    }
+                                    @if (item.LoaiTaiKhoan == (int)UserType.GiaoVien)
+                                    {
+                                        @Html.Raw("Giáo viên")
+                                    }
+                                    @if (item.LoaiTaiKhoan == (int)UserType.HocVien)
+                                    {
+                                        @Html.Raw("Học viên")
+                                    }
+                                </td>
+                                <td>
+                                    <a href="/user/edit/@item.MaTaKhoan" class="btn btn-info btn-sm">Sửa</a>
+                                    <a href="/user/delete/@item.MaTaKhoan" onclick="return confirm('Bạn chắc chắn muốn xóa mục đã chọn?')" class="btn btn-danger btn-sm">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+

@@ -1,0 +1,406 @@
+﻿@model LopHoc
+@{
+    ViewBag.Title = "Lớp học: " + Model.TenLopHoc;
+    ViewBag.Controller = "Lớp học";
+    ViewBag.QuanLy = "active";
+    ViewBag.LopHoc = "active";
+    ViewBag.Id = "view-null";
+    var datetime = DateTime.Now.AddDays(2);
+
+    var MaTaiKhoan = 0;
+    HttpCookie id = Request.Cookies.Get("Id");
+    if (id != null)
+    {
+        MaTaiKhoan = int.Parse(id.Value);
+    }
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title (@StringHelpper.MaLopHocConvert(Model.MaLopHoc))</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Bảng tin</a></li>
+                        <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Bài tập trên lớp</a></li>
+                        <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Mọi người</a></li>
+                        <li class="" onclick="Xemdiem();"><a href="#tab_4" data-toggle="tab" aria-expanded="false">Số điểm</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="box box-success box-solid">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">Sắp đến hạn</h3>
+                                        </div><!-- /.box-header -->
+                                        <div class="box-body">
+                                            @if(Model.BaiTaps.Count(x=> x.NgayKetThuc < datetime && x.NguoiTao == MaTaiKhoan) > 0)
+                                            {
+                                                foreach(var item in Model.BaiTaps.Where(x => x.NgayKetThuc < datetime && x.NguoiTao == MaTaiKhoan).ToList())
+                                                {
+                                                    <p>@item.TenBaiTap</p>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <p>Không có bài tập nào sắp đến hạn</p>
+                                            }
+                                        </div><!-- /.box-body -->
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="box box-warning box-solid">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">Thông tin</h3>
+                                        </div><!-- /.box-header -->
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-xs-6">
+                                                    <!-- small box -->
+                                                    <div class="small-box bg-aqua">
+                                                        <div class="inner">
+                                                            <h3>@Model.GiangViens.Count()</h3>
+                                                            <p>Giảng viên</p>
+                                                        </div>
+                                                        <div class="icon">
+                                                            <i class="fa fa-user"></i>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- ./col -->
+                                                <div class="col-lg-4 col-xs-6">
+                                                    <!-- small box -->
+                                                    <div class="small-box bg-green">
+                                                        <div class="inner">
+                                                            <h3>@Model.HocViens.Count()</h3>
+                                                            <p>Học viên</p>
+                                                        </div>
+                                                        <div class="icon">
+                                                            <i class="fa fa-group"></i>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- ./col -->
+                                                <div class="col-lg-4 col-xs-6">
+                                                    <!-- small box -->
+                                                    <div class="small-box bg-yellow">
+                                                        <div class="inner">
+                                                            <h3>@Model.ChuDes.Count(x=> x.NguoiTao == MaTaiKhoan)</h3>
+                                                            <p>Chủ đề</p>
+                                                        </div>
+                                                        <div class="icon">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- ./col -->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <a class="btn btn-warning" onclick="themthongbao(@Model.MaLopHoc);">Thêm thông báo cho lớp học</a>
+                                                    <br />
+                                                    <br />
+                                                </div><!-- ./col -->
+                                            </div>
+                                            @Html.Action("ThongTinLopHoc", new { malop = Model.MaLopHoc })
+
+                                        </div><!-- /.box-body -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_2">
+                            <a class="btn btn-info" onclick="themchude(@Model.MaLopHoc);">Thêm chủ đề</a>
+                            <a class="btn btn-danger" onclick="themtailieu(@Model.MaLopHoc);">Thêm tài liệu</a>
+                            <a class="btn btn-success" onclick="thembaitap(@Model.MaLopHoc);">Thêm Bài tập</a>
+
+                            <hr />
+                            <div id="div_baitap">
+                                @Html.Partial("_BaiTap", Model)
+                            </div>
+                        </div><!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_3">
+                            <div id="div_moinguoi">
+                                @Html.Partial("_MoiNguoi", Model)
+                            </div>
+                        </div><!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_4">
+                            <table class="table table-bordered table-striped" style="width: 100%;" id="example3">
+                                <thead>
+                                    <tr>
+                                        <th>Họ tên</th>
+                                        <th>Email</th>
+                                        <th>Điểm học tập</th>
+                                        <th>Điểm chuyên cần</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.BaiTaps.Where(x => x.NguoiTao == MaTaiKhoan && x.TrangThai == (int)TrangThaiBaiTap.GiaoBaiTap).ToList())
+                                    {
+                                        <tr class="fix-llll">
+                                            <td><i class="fa fa-file-excel-o margin-r-5"></i>Bài tập: @item.TenBaiTap</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        foreach (var d in item.BaiTap_HocVien.Where(x => x.TrangThai == (int)TrangThaiBaiTap.ChamDiem).ToList())
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(d.HocVien.TaiKhoan.HinhDaiDien))
+                                                    {
+                                                        <img src="@d.HocVien.TaiKhoan.HinhDaiDien" class="img-circle" style="width:35px; height:35px;" alt="User Image">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="/Content/dist/img/avatar5.png" style="width:35px; height:35px;" class="img-circle" alt="User Image">
+                                                    }
+                                                    @d.HocVien.TenHocVien
+                                                </td>
+                                                <td>@d.HocVien.Email</td>
+                                                <td>@d.DiemHocTap/@item.ThangDiem</td>
+                                                <td>@d.DiemChuyenCan/@item.ThangDiemChuyenCan</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div><!-- /.tab-pane -->
+                    </div><!-- /.tab-content -->
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<script>
+    function CKupdate(){
+        for ( instance in CKEDITOR.instances ){
+            CKEDITOR.instances[instance].updateElement();
+            CKEDITOR.instances[instance].destroy();
+        }
+    }
+
+
+    function thembaitap(id) {
+        $.get("@Url.Action("AddBaiTap")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function suabaitap(id) {
+        $.get("@Url.Action("EditBaiTap")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function giaobaitap(id) {
+        $.post("@Url.Action("GiaoBaiTap")/" + id, function (data, status) {
+            $('#div_baitap').empty().html(data);
+            $('#divContent').empty();
+            $('#myModal').modal('hide');
+        });
+    }
+
+    function xembaitap(id) {
+        $.get("@Url.Action("ViewBaiTap")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function xembaitapnhanxet(id) {
+        $.get("@Url.Action("ViewBaiTapNhanXet")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function themtailieu(id) {
+        $.get("@Url.Action("AddTaiLieu")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function suatailieu(id) {
+        $.get("@Url.Action("EditTaiLieu")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function giaotailieu(id) {
+        $.post("@Url.Action("GiaoTaiLieu")/" + id, function (data, status) {
+            $('#div_baitap').empty().html(data);
+            $('#divContent').empty();
+            $('#myModal').modal('hide');
+        });
+    }
+
+    function xemtailieu(id) {
+        $.get("@Url.Action("ViewTaiLieu")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function xemtailieunhanxet(id) {
+        $.get("@Url.Action("ViewTaiLieuNhanXet")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function themchude(id) {
+        $.get("@Url.Action("AddChuDe")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function themthongbao(id) {
+        $.get("@Url.Action("AddThongBao")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function xemthongbao(id) {
+        $.get("@Url.Action("ViewThongBao")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function xemthongbaonhanxet(id){
+        $.get("@Url.Action("ViewThongBaoNhanXet")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function themgiaovien(id) {
+        $.get("@Url.Action("AddGiaoVien")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function themhocvien(id) {
+        $.get("@Url.Action("AddHocVien")/" + id, function (data, status) {
+            CKupdate();
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
+        });
+    }
+
+    function xoagiaovien(lhid, gvid) {
+        var r = confirm("Bạn có chắc chắn muốn xóa!");
+        if (r == true) {
+            $.ajax({
+                url: '@Url.Action("XoaGiaoVien")',
+                type: 'post',
+                data: {
+                    MaLopHoc: lhid,
+                    MaGiaoVien: gvid
+                },
+                success: function (data) {
+                    if (data.IsError == false) {
+                        $.ajax({
+                            url: '@Url.Action("MoiNguoi")/' +@Model.MaLopHoc +'',
+                            type: 'get',
+                            success: function (data) {
+                                $('#div_moinguoi').html(data);
+                            }
+                        });
+                    }
+                    else {
+                        alert(data.Messger);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+    }
+
+    function xoahocvien(lhid, hvid) {
+        var r = confirm("Bạn có chắc chắn muốn xóa!");
+        if (r == true) {
+            $.ajax({
+                url: '@Url.Action("XoaHocVien")',
+                type: 'post',
+                data: {
+                    MaLopHoc: lhid,
+                    MaHocVien: hvid
+                },
+                success: function (data) {
+                    if (data.IsError == false) {
+                        $.ajax({
+                            url: '@Url.Action("MoiNguoi")/' +@Model.MaLopHoc +'',
+                            type: 'get',
+                            success: function (data) {
+                                $('#div_moinguoi').html(data);
+                            }
+                        });
+                    }
+                    else {
+                        alert(data.Messger);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+    }
+
+    function xoachude(lhid, cdid) {
+        var r = confirm("Bạn có chắc chắn muốn xóa!");
+        if (r == true) {
+            $.ajax({
+                url: '@Url.Action("XoaChuDe")',
+                type: 'post',
+                data: {
+                    MaLopHoc: lhid,
+                    MaChuDe: cdid
+                },
+                success: function (data) {
+                    if (data.IsError == false) {
+                        $.ajax({
+                            url: '@Url.Action("BaiTap")/' +@Model.MaLopHoc +'',
+                            type: 'get',
+                            success: function (data) {
+                                $('#div_baitap').html(data);
+                            }
+                        });
+                    }
+                    else {
+                        alert(data.Messger);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+    }
+</script>

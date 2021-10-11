@@ -1,0 +1,85 @@
+﻿@model List<LopHoc>
+@{
+    ViewBag.Title = "Danh sách lớp học";
+    ViewBag.Controller = "Lớp học";
+    ViewBag.QuanLy = "active";
+    ViewBag.LopHoc = "active";
+    ViewBag.Id = "view-null";
+}
+<style>
+    .w150{
+        width: 150px!important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Mã lớp</th>
+                            <th>Tên lớp học</th>
+                            <th>Mô tả</th>
+                            <th>Địa chỉ</th>
+                            <th>Phòng</th>
+                            <th>Chủ đề</th>
+                            <th>Trạng thái</th>
+                            <th class="w150">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@StringHelpper.MaLopHocConvert(item.MaLopHoc)</td>
+                                <td>@item.TenLopHoc</td>
+                                <td>@item.MoTa</td>
+                                <td>@item.DiaChi</td>
+                                <td>@item.Phong</td>
+                                <td>@item.ChuDe</td>
+                                <td>
+                                    @if (item.TrangThai == (int)TrangThaiLop.Nhap)
+                                    {
+                                        @Html.Raw("Nháp")
+                                    }
+                                    @if (item.TrangThai == (int)TrangThaiLop.KichHoat)
+                                    {
+                                        @Html.Raw("Kích hoạt")
+                                    }
+                                    @if (item.TrangThai == (int)TrangThaiLop.Dong)
+                                    {
+                                        @Html.Raw("Đóng")
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Detail")/@item.MaLopHoc" class="btn btn-default btn-sm">Xem</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<script>
+    function add() {
+        $.get("@Url.Action("Add")", function (data, status) {
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('toggle')
+        });
+    }
+
+    function edit(id) {
+        $.get("@Url.Action("Edit")/" + id, function (data, status) {
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('toggle')
+        });
+    }
+</script>

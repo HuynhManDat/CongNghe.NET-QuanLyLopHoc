@@ -1,0 +1,96 @@
+﻿@model AddGiaoVienMeta
+@{
+    ViewBag.Title = "Thêm giáo viên";
+    Layout = null;
+    var db = new WebQLDiemEntities();
+    var list = new List<SelectListItem>();
+    foreach (var item in db.GiangViens.ToList())
+    {
+        list.Add(new SelectListItem { Value = item.MaGiangVien + "", Text = item.TenGiangVien + " (" + item.Email + ")" });
+    }
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <!-- form start -->
+            <form action="@Url.Action("AddGiaoVien")" method="post" class="form-horizontal" id="formthemgiaovien">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.MaLopHoc)
+
+                <div class="box-body">
+                    @if (Model.MaLopHoc > 0)
+                    {
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Mã lớp học</label>
+                            <div class="col-md-5">
+                                <input type="text" value="@StringHelpper.MaLopHocConvert(Model.MaLopHoc)" class="form-control" readonly />
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Giáo viên</label>
+                        <div class="col-md-5">
+                            @Html.DropDownListFor(x => x.MaGiaoVien, list, new Dictionary<string, object>
+                            {
+                                {"class", "form-control select2"},
+                                {"required", "required" }
+                            })
+                            @Html.ValidationMessageFor(x => x.MaGiaoVien)
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/ClientScripts/mvcfoolproof.unobtrusive.min.js"></script>
+
+<script>
+    $("#formthemgiaovien").submit(function (event) {
+        event.preventDefault();
+        var actionurl = event.currentTarget.action;
+        if ($(this).valid()) {
+            $.ajax({
+                url: actionurl,
+                type: 'post',
+                data: $("#formthemgiaovien").serialize(),
+                success: function (data) {
+                    if (data.IsError == false) {
+                        $.ajax({
+                            url: '@Url.Action("MoiNguoi")/' +@Model.MaLopHoc +'',
+                            type: 'get',
+                            success: function (data) {
+                                $('#div_moinguoi').html(data);
+                                $('#myModal').modal('hide');
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(textStatus, errorThrown);
+                            }
+                        });
+                    }
+                    else {
+                        alert(data.Messger);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+        return false;
+    });
+
+    $(".select2").select2();
+</script>

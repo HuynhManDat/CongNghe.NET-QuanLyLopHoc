@@ -1,0 +1,382 @@
+﻿@model BaiTap
+@{
+    ViewBag.Title = Model.TenBaiTap;
+    Layout = null;
+
+    var db = new WebQLDiemEntities();
+    var list = new List<SelectListItem>();
+    list.Add(new SelectListItem() { Value = "", Text = "Chưa chọn chủ đề" });
+    foreach (var item in db.ChuDes.ToList())
+    {
+        list.Add(new SelectListItem { Value = item.MaChuDe + "", Text = item.TenChuDe });
+    }
+
+    var listT = new List<SelectListItem>();
+    listT.Add(new SelectListItem { Value = 10 + "", Text = 10 + "" });
+    listT.Add(new SelectListItem { Value = 100 + "", Text = 100 + "" });
+
+    var listHV = new List<SelectListItem>();
+    foreach (var item in db.HocViens.Where(x => x.LopHocs.Count(y => y.MaLopHoc == Model.MaLopHoc) > 0).ToList())
+    {
+        listHV.Add(new SelectListItem { Value = item.MaHocVien + "", Text = item.TenHocVien + "(" + item.Email + ")", Selected = Model.BaiTap_HocVien.Count(x => x.MaHocVien == item.MaHocVien) > 0 });
+    }
+    var MaTaiKhoan = 0;
+    HttpCookie id = Request.Cookies.Get("Id");
+    if (id != null)
+    {
+        MaTaiKhoan = int.Parse(id.Value);
+    }
+    var baitaps = "";
+    var bthv = Model.BaiTap_HocVien.FirstOrDefault(x => x.HocVien.MaTaiKhoan == MaTaiKhoan);
+
+    if (bthv != null)
+    {
+        baitaps = bthv.TepDinhKem;
+    }
+}
+<style>
+    .fix-content .form-control {
+        background: #fff;
+        border: none;
+    }
+
+        .fix-content .form-control.fixxx {
+            border: 1px solid #808080;
+        }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="row fix-content">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <!-- form start -->
+            <div class="form-horizontal">
+                <div class="box-body">
+                    <div class="fix-view">
+                        <!-- left column -->
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label class="col-md-12">Tên bài tập</label>
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(x => x.TenBaiTap, new Dictionary<string, object>
+                                    {
+                                        {"class", "form-control"},
+                                        { "disabled", "disabled" }
+                                    })
+                                    @Html.ValidationMessageFor(x => x.TenBaiTap)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Mô tả</label>
+                                <div class="col-md-12">
+                                    <div class="form-control">
+                                        @Html.Raw(Model.MoTa)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Tệp đính kèm</label>
+                                <div class="col-md-12">
+                                    <table class="table" id="listImg"></table>
+                                    <input type="hidden" id="MoreImages" name="MoreImages" value="@string.Join(",", Model.BaiTapTepDinhKems.Select(x=>x.DuongDan).ToList())" />
+                                </div>
+                            </div>
+
+                            <hr />
+                            <h4>Nộp bài tập</h4>
+                            <div class="form-group">
+                                <label class="col-md-12">Nội dung trả bài</label>
+                                <div class="col-md-12">
+                                    @Html.TextArea("NoiDungGuiBai", null, new Dictionary<string, object>
+                                    {
+                                        {"class", "form-control fixxx"}
+                                    })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Tệp bài tập đã làm</label>
+                                <div class="col-md-12">
+                                    @if (bthv.TrangThai <= (int)TrangThaiBaiTap.GiaoBaiTap)
+                                    {
+                                        <a class="btn btn-info" id="btnAddImgHV">Tải lên</a>
+                                    }
+                                    <table class="table" id="listImgHV"></table>
+                                    <input type="hidden" id="MoreImagesHV" name="MoreImagesHV" value="@baitaps" />
+                                </div>
+                            </div>
+                            @if (bthv.TrangThai <= (int)TrangThaiBaiTap.GiaoBaiTap)
+                            {
+                                <div class="form-group fix">
+                                    <div class="col-md-12">
+                                        <a onclick="LuuBaiTap(@Model.MaBaiTap)" class="btn btn-default">Lưu</a>
+                                        <a onclick="GiaoBaiTap(@Model.MaBaiTap)" class="btn btn-primary">Nộp bài tập</a>
+                                    </div>
+                                </div>
+                            }
+
+                            <hr />
+                            <h4>Trao đổi</h4>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="direct-chat-messages">
+                                        @if (Model.BaiTap_NhanXet != null)
+                                        {
+                                            foreach (var item in Model.BaiTap_NhanXet.ToList())
+                                            {
+                                                if (item.TaiKhoan.LoaiTaiKhoan == (int)UserType.HocVien)
+                                                {
+                                                    <div class="direct-chat-msg">
+                                                        <div class="direct-chat-info clearfix">
+                                                            <span class="direct-chat-name pull-left">@item.TaiKhoan.TenDangNhap</span>
+                                                            <span class="direct-chat-timestamp pull-right">@item.NgayTao</span>
+                                                        </div>
+                                                        <img class="direct-chat-img" src="/Content/dist/img/avatar04.png" alt="message user image" />
+                                                        <div class="direct-chat-text">
+                                                            @item.NoiDung
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="direct-chat-msg">
+                                                        <div class="direct-chat-info clearfix">
+                                                            <span class="direct-chat-name pull-left">@item.TaiKhoan.TenDangNhap</span>
+                                                            <span class="direct-chat-timestamp pull-right">@item.NgayTao</span>
+                                                        </div>
+                                                        <img class="direct-chat-img" src="/Content/dist/img/avatar5.png" alt="message user image" />
+                                                        <div class="direct-chat-text">
+                                                            @item.NoiDung
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                        <form action="@Url.Action("TraoDoi")" method="post" id="from-chat">
+                                            <div class="input-group">
+                                                @Html.HiddenFor(x => x.MaBaiTap)
+                                                <input type="text" name="NoiDung" required placeholder="Nội dung trao đổi ..." class="form-control fixxx">
+                                                <span class="input-group-btn">
+                                                    <button type="submit" class="btn btn-warning btn-flat">Send</button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="col-md-12">Chủ đề</label>
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(x => x.MaChuDe, list, new Dictionary<string, object>
+                                    {
+                                        {"class", "form-control"},
+                                        { "disabled", "disabled" }
+                                    })
+                                    @Html.ValidationMessageFor(x => x.MaChuDe)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Thang điểm học tập</label>
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(x => x.ThangDiem, new Dictionary<string, object>
+                                    {
+                                        {"class", "form-control"},
+                                        { "disabled", "disabled" }
+                                    })
+                                    @Html.ValidationMessageFor(x => x.ThangDiem)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Thang điểm chuyên cần</label>
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(x => x.ThangDiemChuyenCan, new Dictionary<string, object>
+                                    {
+                                        {"class", "form-control"},
+                                        { "disabled", "disabled" }
+                                    })
+                                    @Html.ValidationMessageFor(x => x.ThangDiemChuyenCan)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Ngày bắt đầu</label>
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(x => x.NgayBatDau, new Dictionary<string, object>
+                                    {
+                                        {"class", "form-control datetimepicker"},
+                                        { "disabled", "disabled" }
+                                    })
+                                    @Html.ValidationMessageFor(x => x.NgayBatDau)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Ngày kết thúc</label>
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(x => x.NgayKetThuc, new Dictionary<string, object>
+                                    {
+                                        {"class", "form-control datetimepicker"},
+                                        { "disabled", "disabled" }
+                                    })
+                                    @Html.ValidationMessageFor(x => x.NgayKetThuc)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function LuuBaiTap(id) {
+        $('#NoiDungGuiBai').val(CKEDITOR.instances['NoiDungGuiBai'].getData());
+        $.ajax({
+            url: '@Url.Action("LuuBaiTap")',
+            type: 'post',
+            data: {
+                id: id,
+                MoreImagesHV: $('#MoreImagesHV').val(),
+                NoiDungGuiBai: $('#NoiDungGuiBai').val()
+            },
+            success: function (data) {
+                if (data.IsError == false) {
+                    xembaitap(@Model.MaBaiTap);
+                }
+                else {
+                    alert(data.Messger);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+    }
+
+    function GiaoBaiTap(id) {
+        $('#NoiDungGuiBai').val(CKEDITOR.instances['NoiDungGuiBai'].getData());
+        $.ajax({
+            url: '@Url.Action("GiaoBaiTap")',
+            type: 'post',
+            data: {
+                id: id,
+                MoreImagesHV: $('#MoreImagesHV').val(),
+                NoiDungGuiBai: $('#NoiDungGuiBai').val()
+            },
+            success: function (data) {
+                if (data.IsError == false) {
+                    xembaitap(@Model.MaBaiTap);
+                }
+                else {
+                    alert(data.Messger);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+    }
+
+    $("#from-chat").submit(function (event) {
+        event.preventDefault();
+        var actionurl = event.currentTarget.action;
+        if ($(this).valid()) {
+            $.ajax({
+                url: actionurl,
+                type: 'post',
+                data: $("#from-chat").serialize(),
+                success: function (data) {
+                    if (data.IsError == false) {
+                        xembaitap(@Model.MaBaiTap);
+                    }
+                    else {
+                        alert(data.Messger);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+        return false;
+    });
+
+    try {
+        CKEDITOR.replace("NoiDungGuiBai");
+    }
+    catch (err) {
+
+    }
+
+    try {
+        var stringImgHV = $('#MoreImagesHV').val();
+        arrayImgHV = stringImgHV.split(',');
+        genderImgHV();
+        $("#btnAddImgHV").click(function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                arrayImgHV.push(fileUrl);
+                genderImgHV();
+            };
+            finder.popup();
+        });
+    }
+    catch (err) { }
+
+    try {
+        var stringImg = $('#MoreImages').val();
+        arrayImg = stringImg.split(',');
+        genderImg();
+
+        var stringImgHV = $('#MoreImagesHV').val();
+        arrayImgHV = stringImgHV.split(',');
+        genderImgHV();
+    }
+    catch (err) { }
+
+    function genderImg() {
+        var i = 0;
+        var str = '';
+        for (i; i < arrayImg.length; i++) {
+            if (arrayImg[i] != undefined && arrayImg[i] != null && arrayImg[i] != '') {
+                var arr = arrayImg[i].split('/');
+                str += '<tr style="border-bottom: 1px beige solid;"><td><i class="fa fa-fw fa-download"></i><a href="' + arrayImg[i] + '" target="_blank">' + arr[arr.length - 1] + '</a></td></tr>'
+            }
+        }
+
+        $('#listImg').html(str);
+        $("#MoreImages").val(arrayImg.toString());
+    }
+
+    function genderImgHV() {
+        var i = 0;
+        var str = '';
+        for (i; i < arrayImgHV.length; i++) {
+            if (arrayImgHV[i] != undefined && arrayImgHV[i] != null && arrayImgHV[i] != '') {
+                var arr = arrayImgHV[i].split('/');
+                str += '<tr style="border-bottom: 1px beige solid;"><td><i class="fa fa-fw fa-download"></i><a href="' + arrayImgHV[i] + '" target="_blank">' + arr[arr.length - 1] + '</a></td><td><a onclick="deleteimg(\'' + i + '\')" class="btn btn-danger btn-sm">Xóa</a></td></tr>'
+            }
+        }
+
+        $('#listImgHV').html(str);
+        $("#MoreImagesHV").val(arrayImgHV.toString());
+    }
+
+    function deleteimg(i) {
+        arrayImgHV.splice(i, 1);
+        genderImgHV();
+    }
+
+    try {
+        $('.datetimepicker').datetimepicker({
+            format: 'MM-DD-YYYY HH:mm:ss'
+        });
+    }
+    catch (err) {
+
+    }
+</script>

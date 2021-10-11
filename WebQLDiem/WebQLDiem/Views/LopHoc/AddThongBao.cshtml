@@ -1,0 +1,154 @@
+﻿@model ThongBao
+@{
+    ViewBag.Title = "Thêm thông báo";
+    Layout = null;
+
+    var db = new WebQLDiemEntities();
+
+    var listHV = new List<SelectListItem>();
+    foreach (var item in db.HocViens.Where(x => x.LopHocs.Count(y => y.MaLopHoc == Model.MaLopHoc) > 0).ToList())
+    {
+        listHV.Add(new SelectListItem { Value = item.MaHocVien + "", Text = item.TenHocVien + "(" + item.Email + ")", Selected = true });
+    }
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <!-- form start -->
+            <form action="@Url.Action("AddThongBao")" method="post" class="form-horizontal" id="formthemthongbao">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.MaLopHoc)
+
+                <div class="box-body">
+                    <div class="row">
+                        <!-- left column -->
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label class="col-md-12">Nội dung thông báo</label>
+                                <div class="col-md-12">
+                                    @Html.TextAreaFor(x => x.NoiDung, new Dictionary<string, object>
+                                    {
+                                        {"class", "form-control"}
+                                    })
+                                    @Html.ValidationMessageFor(x => x.NoiDung)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Tệp đính kèm</label>
+                                <div class="col-md-12">
+                                    <a class="btn btn-info" id="btnAddImg">Tải lên</a>
+                                    <table class="table" id="listImg"></table>
+                                    <input type="hidden" id="MoreImages" name="MoreImages" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            @if (Model.MaLopHoc > 0)
+                            {
+                                <div class="form-group">
+                                    <label class="col-md-12">Mã lớp học</label>
+                                    <div class="col-md-12">
+                                        <input type="text" value="@StringHelpper.MaLopHocConvert(Model.MaLopHoc.Value)" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Học viên</label>
+                                    <div class="col-md-12">
+                                        @Html.DropDownList("HocViens[]", listHV, new Dictionary<string, object>
+                                        {
+                                            {"class", "form-control select2"},
+                                            {"id", "HocViens" },
+                                            {"multiple", "multiple" }
+                                        })
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/ClientScripts/mvcfoolproof.unobtrusive.min.js"></script>
+
+<script>
+    $("#formthemthongbao").submit(function (event) {
+        if ($(this).valid()) {
+            event.preventDefault();
+            var actionurl = event.currentTarget.action;
+            $('#NoiDung').val(CKEDITOR.instances['NoiDung'].getData());
+
+            $.ajax({
+                url: actionurl,
+                type: 'post',
+                data: $("#formthemthongbao").serialize(),
+                success: function (data) {
+                    if (data.IsError == false) {
+                        location.reload();
+                    }
+                    else {
+                        alert(data.Messger);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+        return false;
+    });
+
+    $(".select2").select2();
+
+    try {
+        CKEDITOR.replace("NoiDung");
+    }
+    catch (err) {
+
+    }
+
+    try {
+        var arrayImg = [];
+        $("#btnAddImg").click(function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                arrayImg.push(fileUrl);
+                genderImg();
+            };
+            finder.popup();
+        });
+    }
+    catch (err) { }
+
+    function genderImg() {
+        var i = 0;
+        var str = '';
+        for (i; i < arrayImg.length; i++) {
+            if (arrayImg[i] != undefined && arrayImg[i] != null && arrayImg[i] != '') {
+                var arr = arrayImg[i].split('/');
+                str += '<tr style="border-bottom: 1px beige solid;"><td><i class="fa fa-fw fa-download"></i><a href="' + arrayImg[i] + '" target="_blank">' + arr[arr.length - 1] + '</a></td><td><a onclick="deleteimg(\'' + i + '\')" class="btn btn-danger btn-sm">Xóa</a></td></tr>'
+            }
+        }
+
+        $('#listImg').html(str);
+        $("#MoreImages").val(arrayImg.toString());
+    }
+
+    function deleteimg(i) {
+        arrayImg.splice(i, 1);
+        genderImg();
+    }
+</script>

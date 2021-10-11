@@ -1,0 +1,61 @@
+﻿@model UserLoginMeta
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Đăng Nhập | Quản Lý Khách Hàng</title>
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="/Content/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/Content/plugins/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/Content/plugins/ionicons-2.0.1/css/ionicons.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/Content/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/Content/customer.css" />
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="/Home"><b>Admin</b>Ql Điểm</a>
+        </div>
+        <div class="login-box-body">
+            <p class="login-box-msg">Đăng nhập quản trị</p>
+            @using (Html.BeginForm("Index", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { }))
+            {
+                <div class="form-group has-feedback">
+                    @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", @placeholder = "Tên đăng nhập" })
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                @Html.ValidationMessageFor(x => x.UserName)
+                <div class="form-group has-feedback">
+                    @Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                @Html.ValidationMessageFor(x => x.Password)
+                <div class="row">
+                    <div class="col-xs-8">
+                    </div>
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery-3.1.0.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/ClientScripts/mvcfoolproof.unobtrusive.min.js"></script>
+</body>
+</html>
