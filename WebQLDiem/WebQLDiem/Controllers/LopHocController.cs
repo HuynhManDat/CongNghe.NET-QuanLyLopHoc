@@ -1,6 +1,9 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -233,6 +236,29 @@ namespace WebQLDiem.Controllers
             {
                 return Json(messeger.AddError("Thêm không thành công"), JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public ActionResult ReadExcelUsingEpplus()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ReadExcel(HttpPostedFileBase upload)
+        {
+            if (Path.GetExtension(upload.FileName) == ".xlsx" || Path.GetExtension(upload.FileName) == ".xls")
+            {
+                ExcelPackage package = new ExcelPackage(upload.InputStream);
+                DataTable Dt = ExcelPackageExtensions.ToDataTable(package);
+                List<HocVien> ListHocVien = new List<HocVien>();
+                for (int i = 0; i < Dt.Rows.Count; i++)
+                {
+                    HocVien hocvien = new HocVien();
+                    hocvien.TenHocVien = Dt.Rows[i]["Name"].ToString();
+
+                    ListHocVien.Add(hocvien);
+                }
+            }
+            return View();
         }
 
         [HttpPost]
