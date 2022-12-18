@@ -4696,6 +4696,8 @@
     <Content Include="Views\TrangThaiGiaoVien\Index.cshtml" />
     <Content Include="Views\QLDSDiem\Index.cshtml" />
     <Content Include="Views\QLDSDiemGiaoVien\Index.cshtml" />
+    <Content Include="Views\LopHoc\ReadExcelUsingEpplus.cshtml" />
+    <Content Include="Views\LopHoc\AddHocVienExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

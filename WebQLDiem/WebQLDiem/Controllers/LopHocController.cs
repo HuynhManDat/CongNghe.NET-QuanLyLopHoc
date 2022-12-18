@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.IO;
@@ -236,6 +237,72 @@ namespace WebQLDiem.Controllers
             {
                 return Json(messeger.AddError("Thêm không thành công"), JsonRequestBehavior.AllowGet);
             }
+        }
+        public ActionResult AddHocVienExcel(int id)
+        {
+            return View(new AddHocVienMeta() { MaLopHoc = id });
+        }
+        [HttpPost]
+        public ActionResult AddHocVienExcel(AddHocVienMeta model, HttpPostedFileBase upload)
+        {
+            if (Path.GetExtension(upload.FileName) == ".xlsx" || Path.GetExtension(upload.FileName) == ".xls")
+            {
+                ExcelPackage package = new ExcelPackage(upload.InputStream);
+                DataTable Dt = ExcelPackageExtensions.ToDataTable(package);
+                List<HocVien> ListHocVien = new List<HocVien>();
+                for (int i = 0; i < Dt.Rows.Count; i++)
+                {
+                    if(Dt.Rows[i]["Mã SV"].ToString() == "")
+                    {
+                        TempData["mess"] = "Không có Mã SV không thể thêm tài khoản";
+                        continue;
+                    }
+                    HocVien hocvien = new HocVien();
+                    hocvien.TenHocVien = Dt.Rows[i]["Họ lót"].ToString() + " " + Dt.Rows[i]["Tên"].ToString();
+                    hocvien.Email = Dt.Rows[i]["Mã SV"].ToString() + "@student.hcmue.edu.vn";
+                    ListHocVien.Add(hocvien);
+                }
+                try
+                {
+                    for (int i = 0; i < ListHocVien.Count; i++)
+                    {
+                        HocVien hocvien = ListHocVien[i];
+                        
+                        if (Db.TaiKhoans.Any(x => x.TenDangNhap == hocvien.Email))
+                        {
+                            TempData["mess"] = "Tài khoản đã tồn tại";
+                            continue;
+                        }
+                        else
+                        {
+                            var taikhoan = new TaiKhoan()
+                            {
+                                TenDangNhap = ListHocVien[i].Email,
+                                MatKhau = "123456",
+                                LoaiTaiKhoan = (int)UserType.HocVien,
+                                NgayTao = DateTime.Now
+                            };
+
+                            Db.TaiKhoans.Add(taikhoan);
+                            Db.SaveChanges();
+
+                            ListHocVien[i].MaTaiKhoan = taikhoan.MaTaKhoan;
+
+                            Db.HocViens.Add(ListHocVien[i]);
+                            Db.SaveChanges();
+
+                            SendMailHocVien(ListHocVien[i].MaTaiKhoan.Value, "Bạn được tạo tài khoản trên hệ thống: " + ConfigurationManager.AppSettings["Domain"]);
+                        }
+                        model.MaHocVien = hocvien.MaHocVien;
+                        AddHocVien(model);
+                    }
+                }
+                catch(Exception e)
+                {
+                    TempData["mess"] = "Không thể thêm dữ liệu";
+                }
+            }
+            return RedirectToAction("index");
         }
 
         public ActionResult ReadExcelUsingEpplus()

@@ -301,53 +301,10 @@
     }
 
     function themhocvienexcel(id) {
-        $.get("@Url.Action("AddHocVien")/" + id, function (data, status) {
+        $.get("@Url.Action("AddHocVienExcel")/" + id, function (data, status) {
             CKupdate();
-            // Lấy file từ trên input xuống
-            var data = new FormData();
-            var files = $("#txtFileUpload").get(0).files;
-
-            // Tạo nhồi file vào formdata
-
-            if (files.length > 0) {
-                data.append("UploadFile", files[0]);
-            }
-
-            // Viết Ajax để Post lên Server để đọc nội dung file
-
-            $.ajax({
-                url: '/LopHoc/ReadExcelData',
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                data: data,
-                success: function (result) {
-                    // Sau khi nhận được kết quả trả về tiến hành xử lý dữ liệu
-                    // Tắt popup và hiển thị dữ liệu lên table
-                    $("#myModal").modal("hide");
-                    var htmlData = "";
-                    // Duyệt List Object vừa trả về từ controller
-                    $.each(result, function (index, item) {
-                        // Lấy từng thuộc tính của item ra
-                        var itemid = item.itemid;
-                        var shopid = item.shopid;
-                        var item_name = item.item_name;
-
-                        // Nhồi vào html
-                        //htmldata += "<tr>";
-                        //htmldata += "<td>" + itemid + "</td>";
-                        //htmldata += "<td>" + shopid + "</td>";
-                        //htmldata += "<td>" + item_name + "</td>";
-                        //htmldata += "</tr>";
-                    });
-
-                    //Cuối cùng là append nó vào table
-                    //$("#table-static-data").html(htmldata);
-                },
-                error: function (xhr) {
-
-                }
-            })
+            $('#divContent').empty().html(data);
+            $('#myModal').modal('show')
         });
     }
 
