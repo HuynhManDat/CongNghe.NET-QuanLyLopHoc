@@ -58,8 +58,10 @@ namespace WebQLDiem.Controllers
                     Db.Entry(obj).State = EntityState.Modified;
                     Db.SaveChanges();
 
-                    SendMailHocVien(obj.HocVien.MaTaiKhoan.Value, "Bài tập [" + obj.BaiTap.TenBaiTap + "] đã được chấm điểm");
-                    SendThongBaoTaiKhoan(obj.HocVien.MaTaiKhoan.Value, "Bài tập [" + obj.BaiTap.TenBaiTap + "] đã được chấm điểm", "Bài tập [" + obj.BaiTap.TenBaiTap + "] đã được chấm điểm");
+                    HttpCookie cookie = Request.Cookies["UserFullName"];
+
+                    SendMailHocVien(obj.HocVien.MaTaiKhoan.Value, "Bài tập [" + obj.BaiTap.TenBaiTap + " - " + obj.BaiTap.LopHoc.TenLopHoc + "] của " + obj.HocVien.TenHocVien + " đã được chấm điểm bởi" + cookie.Value.ToString());
+                    SendThongBaoTaiKhoan(obj.HocVien.MaTaiKhoan.Value, "Bài tập [" + obj.BaiTap.TenBaiTap + " - " + obj.BaiTap.LopHoc.TenLopHoc + "] của " + obj.HocVien.TenHocVien + " đã được chấm điểm", "Bài tập [" + obj.BaiTap.TenBaiTap + " - " + obj.BaiTap.LopHoc.TenLopHoc + "] của " + obj.HocVien.TenHocVien + " đã được chấm điểm bởi" + cookie.Value.ToString());
                 }
                 catch
                 {
